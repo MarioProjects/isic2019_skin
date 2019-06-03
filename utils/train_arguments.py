@@ -1,5 +1,6 @@
-import json
 import argparse
+import json
+import os
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -49,6 +50,9 @@ if args.output_dir == "results/new_logs+train_info":
     if args.data_augmentation: optional_info += "_DA"
     if args.path_extension != "": optional_info += "_" + args.path_extension
     args.output_dir = "results/new_logs_{}_{}".format(args.model_name, args.optimizer, optional_info)
+
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
 
     # Save arguments
     # https://stackoverflow.com/a/55114771
