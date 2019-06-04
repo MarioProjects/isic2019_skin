@@ -66,11 +66,11 @@ for current_epoch in range(args.epochs):
     val_loss, val_accuracy = torchy.utils.val_step(val_loader, model, criterion)
 
     if val_loss > best_loss:
-        torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_best_loss.pt")
+        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_loss.pt")
         best_loss = val_loss
 
     if val_accuracy > best_accuracy:
-        torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_best_accuracy.pt")
+        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_accuracy.pt")
         best_accuracy = val_accuracy
 
     # Imprimimos como va el entrenamiento
@@ -84,11 +84,11 @@ for current_epoch in range(args.epochs):
     progress_train_acc.append(train_accuracy)
     progress_val_acc.append(val_accuracy)
 
-    torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_last.pt")
+    torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_last.pt")
 
     progress = {"train_loss": progress_train_loss, "train_accuracy": progress_train_acc,
                 "val_loss": progress_val_loss, "val_accuracy": progress_val_acc}
-    with open(args.output_dir + '/progress.pickle', 'wb') as handle:
+    with open(args.output_dir + 'progress.pickle', 'wb') as handle:
         pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     if args.lr_scheduler:
