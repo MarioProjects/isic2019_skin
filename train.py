@@ -6,10 +6,8 @@
 import pickle
 from time import gmtime, strftime
 
-import torchy
 import albumentations
 import math
-import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
@@ -54,6 +52,7 @@ optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
 scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 135, 170], gamma=0.2)
 
 # ---- START TRAINING ----
+print("\n---- Start Training ----")
 for current_epoch in range(args.epochs):
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
