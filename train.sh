@@ -13,4 +13,4 @@ model_path="results/"$model"_"$optimizer"_"$lr"_d"$depth_coefficient"_w"$width_c
 python3 -u train.py --optimizer $optimizer --model_name $model --learning_rate $lr --epochs $epochs \
                     --depth_coefficient $depth_coefficient --width_coefficient $width_coefficient \
                     --resolution_coefficient $resolution_coefficient --compound_coefficient $compound_coefficient \
-                    --output_dir $model_path --batch_size $batch_size \
+                    --output_dir $model_path --batch_size $batch_size
