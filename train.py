@@ -48,7 +48,7 @@ model = model_selector(args.model_name, num_classes, args.depth_coefficient, arg
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
 
 progress_train_loss, progress_val_loss, progress_train_acc, progress_val_acc = [], [], [], []
-best_loss, best_acc = 10e10, -1
+best_loss, best_accuracy = 10e10, -1
 
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
