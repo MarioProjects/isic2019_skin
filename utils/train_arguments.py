@@ -27,12 +27,18 @@ parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
 
+parser.add_argument('--depth_coefficient', type=float, default=1.0, help='[Efficientnet] Depth Coefficient')
+parser.add_argument('--width_coefficient', type=float, default=1.0, help='[Efficientnet] Width Coefficient')
+parser.add_argument('--resolution_coefficient', type=float, default=1.0, help='[Efficientnet] Resolution Coefficient')
+parser.add_argument('--compound_coefficient', type=float, default=1.0,
+                    help='[Efficientnet] compound coefficient φ to uniformly scales network width, depth, and resolution')
+
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate')
 parser.add_argument('--lr_scheduler', action='store_true', help='Use a LR scheduler to control LR')
 parser.add_argument('--data_augmentation', action='store_true', help='Apply data augmentations at train time')
 
-parser.add_argument('--img_size', type=int, default=200, help='Initial image size (square img)')
-parser.add_argument('--crop_size', type=int, default=200, help='Image Center crop size (square img)')
+parser.add_argument('--img_size', type=int, default=256, help='Initial image size (square img)')
+parser.add_argument('--crop_size', type=int, default=224, help='Final Image size - Crop (square img)')
 
 parser.add_argument('--output_dir', type=str, default='results/new_logs+train_info',
                     help='Where progress will be saved')

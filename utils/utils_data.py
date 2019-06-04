@@ -30,7 +30,6 @@ class ISIC2019_Dataset(data.Dataset):
 
     def __init__(self, data_partition="", transforms=None, albumentation=None, validation_size=0.15, seed=42):
         """
-          - validation_patients: Hay un total de 100 pacientes
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
              -> Si es "train" devuelve 1-validation_size muestras de todo el TRAIN

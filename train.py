@@ -1,52 +1,41 @@
-
-#!/usr/bin/env python
+# !/usr/bin/env python
 # coding: utf-8
 
 # ---- Library import ----
 
+import pickle
 from time import gmtime, strftime
 
+import torchy
+import albumentations
+import math
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader
 
-
-import albumentations
-
 # ---- My utils ----
-from utils.utils_data import *
 from utils.train_arguments import *
+from utils.utils_data import *
+from utils.utils_training import *
 
-EFFICIENTNET_SEARCH_SPACE = [
-    # Depth | Width | Resolution
-    # D*W^2*R^2 aprox 2
-    [1, 1, 1],
-    [1.2, 1.1, 1.15],
-    [1.1, 1.2, 1.15],
-    [1.3, 1.15, 1.1],
-    [1, 1.1, 1.3],
-    [1, 1.3, 1.1],
-    [1.1, 1.05, 1.3],
-    [1.35, 1.1, 1.1],
-    [1.1, 1.3, 1.05],
-    [1.1, 1.05, 1.3]
-]
-
+# Primero necesitamos reescalar (si usamos los coeficientes de Efficientnet) la resolucion de las imagenes a usar
+args.crop_size = math.ceil(args.crop_size * args.resolution_coefficient)
+args.img_size = math.ceil(args.img_size * args.resolution_coefficient)
 
 train_aug = albumentations.Compose([
-                albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
-                albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size),
-                albumentations.Resize(args.img_size, args.img_size)
-            ])
+    albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
+    albumentations.Resize(args.img_size, args.img_size),
+    albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size)
+])
 
 val_aug = albumentations.Compose([
-                albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
-                albumentations.Resize(args.img_size, args.img_size),
-                albumentations.CenterCrop(p=1, height=args.crop_size, width=args.crop_size)
-          ])
+    albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
+    albumentations.Resize(args.img_size, args.img_size),
+    albumentations.CenterCrop(p=1, height=args.crop_size, width=args.crop_size)
+])
 
 if args.data_augmentation:
     print("Data Augmentation to be implemented...")
-
 
 train_dataset = ISIC2019_Dataset(data_partition="train", transforms=train_aug)
 train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
@@ -54,6 +43,53 @@ train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=
 val_dataset = ISIC2019_Dataset(data_partition="validation", transforms=val_aug)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 
-
-model = model_selector(args.model_name)
+model = model_selector(args.model_name, args.depth_coefficient, args.width_coefficient)
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
+
+progress_train_loss, progress_val_loss, progress_train_acc, progress_val_acc = [], [], [], []
+best_loss, best_acc = 10e10, -1
+
+criterion = nn.CrossEntropyLoss()
+optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
+scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 135, 170], gamma=0.2)
+
+# ---- START TRAINING ----
+for current_epoch in range(args.epochs):
+
+    train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
+
+    val_loss, val_accuracy = torchy.utils.val_step(val_loader, model, criterion)
+
+    if val_loss > best_loss:
+        torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_best_loss.pt")
+        best_loss = val_loss
+
+    if val_accuracy > best_accuracy:
+        torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_best_accuracy.pt")
+        best_accuracy = val_accuracy
+
+    # Imprimimos como va el entrenamiento
+    current_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    print("[{}] Epoch {}, Train Loss: {:.6f}, Val Loss: {:.6f}, Train Acc: {:.2f}, Val Acc: {:.2f}".format(
+        current_time, current_epoch + 1, train_loss, val_loss, train_accuracy, val_accuracy
+    ))
+
+    progress_train_loss.append(train_loss)
+    progress_val_loss.append(val_loss)
+    progress_train_acc.append(train_accuracy)
+    progress_val_acc.append(val_accuracy)
+
+    torch.save(model.state_dict(), args.output_dir + "/model_" + args.model_name + "_last.pt")
+
+    progress = {"train_loss": progress_train_loss, "train_accuracy": progress_train_acc,
+                "val_loss": progress_val_loss, "val_accuracy": progress_val_acc}
+    with open(args.output_dir + '/progress.pickle', 'wb') as handle:
+        pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
+    if args.lr_scheduler:
+        scheduler.step()
+
+print("\n------------------------")
+print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
+                                                           np.array(progress_val_acc).argmax() + 1))
+print("------------------------\n")
