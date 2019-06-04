@@ -2,9 +2,9 @@ import torch
 import torchy
 
 
-def model_selector(model_name, depth_coefficient=1.0, width_coefficient=1.0):
+def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coefficient=1.0):
     if model_name == "efficientnet":
-        return torchy.models.EfficientNet_Constants(depth_coefficient, width_coefficient).cuda()
+        return torchy.models.EfficientNet_Constants(depth_coefficient, width_coefficient, num_classes=num_classes).cuda()
     else:
         assert False, "Uknown model selected!"
 

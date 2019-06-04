@@ -42,7 +42,9 @@ val_dataset = ISIC2019_Dataset(data_partition="validation", albumentation=val_au
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 print("Data loaded!\n")
 
-model = model_selector(args.model_name, args.depth_coefficient, args.width_coefficient)
+num_classes = len(np.unique(ISIC_TRAIN_DF_TRUTH.target))
+print("{} Classes detected!".format(num_classes))
+model = model_selector(args.model_name, num_classes, args.depth_coefficient, args.width_coefficient)
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
 
 progress_train_loss, progress_val_loss, progress_train_acc, progress_val_acc = [], [], [], []
