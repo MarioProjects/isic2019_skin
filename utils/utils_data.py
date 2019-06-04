@@ -46,7 +46,7 @@ class ISIC2019_Dataset(data.Dataset):
         self.imgs = np.array(self.imgs)
 
         random.seed(seed)
-        val_images = random.sample(range(len(self.imgs) + 1), int(validation_size * len(self.imgs)))
+        val_images = random.sample(range(len(self.imgs)), int(validation_size * len(self.imgs)))
 
         if data_partition == "train":
             train_images = list(set(list(range(len(self.imgs)))) - set(val_images))
@@ -76,9 +76,10 @@ class ISIC2019_Dataset(data.Dataset):
 
         if self.albumentation:
             try:
-                augmented = self.albumentation_img(image=image)
+                augmented = self.albumentation(image=image)
                 image = augmented['image']
             except:
                 assert False, "Transform error in file: " + img_name
 
+        image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target

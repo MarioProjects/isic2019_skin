@@ -35,11 +35,12 @@ val_aug = albumentations.Compose([
 if args.data_augmentation:
     print("Data Augmentation to be implemented...")
 
-train_dataset = ISIC2019_Dataset(data_partition="train", transforms=train_aug)
+train_dataset = ISIC2019_Dataset(data_partition="train", albumentation=train_aug)
 train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
 
-val_dataset = ISIC2019_Dataset(data_partition="validation", transforms=val_aug)
+val_dataset = ISIC2019_Dataset(data_partition="validation", albumentation=val_aug)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
+print("Data loaded!\n")
 
 model = model_selector(args.model_name, args.depth_coefficient, args.width_coefficient)
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
@@ -50,6 +51,9 @@ best_loss, best_acc = 10e10, -1
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
 scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 135, 170], gamma=0.2)
+
+for argument in args.__dict__:
+    print("{}: {}".format(argument, args.__dict__[argument]))
 
 # ---- START TRAINING ----
 print("\n---- Start Training ----")

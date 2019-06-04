@@ -17,7 +17,7 @@ parser = argparse.ArgumentParser(
     formatter_class=SmartFormatter)
 
 parser.add_argument('--verbose', action='store_true', help='Verbose mode')
-parser.add_argument('--epochs', type=int, default=150, help='Total number epochs for training')
+parser.add_argument('--epochs', type=int, default=200, help='Total number epochs for training')
 parser.add_argument('--batch_size', type=int, default=64, help='Batch Size for training')
 
 parser.add_argument('--model_name', type=str, default='efficientnet',
