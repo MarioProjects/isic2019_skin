@@ -1,0 +1,226 @@
+Data loaded!
+
+8 Classes detected!
+verbose: False
+lr_scheduler: False
+depth_coefficient: 1.0
+learning_rate: 0.001
+epochs: 200
+compound_coefficient: 1.0
+width_coefficient: 1.0
+model_name: efficientnet
+output_dir: results/efficientnet_adam_0.001_d1.0_w1.0_r1.0_c1.0/
+crop_size: 224
+batch_size: 32
+data_augmentation: False
+img_size: 256
+resolution_coefficient: 1.0
+optimizer: adam
+path_extension: 
+
+---- Start Training ----
+[2019-06-04 17:11:53] Epoch 1, Train Loss: 1.214257, Val Loss: 1.143852, Train Acc: 55.88, Val Acc: 59.28
+[2019-06-04 17:20:54] Epoch 2, Train Loss: 1.115473, Val Loss: 1.114404, Train Acc: 59.56, Val Acc: 58.99
+[2019-06-04 17:29:55] Epoch 3, Train Loss: 1.072045, Val Loss: 1.061090, Train Acc: 61.46, Val Acc: 62.36
+[2019-06-04 17:38:55] Epoch 4, Train Loss: 1.046809, Val Loss: 1.027028, Train Acc: 62.27, Val Acc: 63.17
+[2019-06-04 17:47:55] Epoch 5, Train Loss: 1.021194, Val Loss: 1.118046, Train Acc: 63.17, Val Acc: 61.73
+[2019-06-04 17:56:54] Epoch 6, Train Loss: 1.012803, Val Loss: 1.039328, Train Acc: 63.59, Val Acc: 62.86
+[2019-06-04 18:05:53] Epoch 7, Train Loss: 0.997770, Val Loss: 0.993992, Train Acc: 64.18, Val Acc: 64.52
+[2019-06-04 18:14:52] Epoch 8, Train Loss: 0.984757, Val Loss: 0.988804, Train Acc: 64.61, Val Acc: 64.62
+[2019-06-04 18:23:51] Epoch 9, Train Loss: 0.973413, Val Loss: 0.972411, Train Acc: 65.42, Val Acc: 64.70
+[2019-06-04 18:32:51] Epoch 10, Train Loss: 0.961536, Val Loss: 0.942999, Train Acc: 65.25, Val Acc: 66.57
+[2019-06-04 18:41:51] Epoch 11, Train Loss: 0.947532, Val Loss: 0.951938, Train Acc: 66.10, Val Acc: 65.89
+[2019-06-04 18:50:51] Epoch 12, Train Loss: 0.939773, Val Loss: 0.943185, Train Acc: 66.15, Val Acc: 66.23
+[2019-06-04 18:59:52] Epoch 13, Train Loss: 0.934523, Val Loss: 0.937378, Train Acc: 66.64, Val Acc: 65.70
+[2019-06-04 19:08:55] Epoch 14, Train Loss: 0.931513, Val Loss: 0.957209, Train Acc: 66.53, Val Acc: 66.54
+[2019-06-04 19:17:56] Epoch 15, Train Loss: 0.918013, Val Loss: 0.949527, Train Acc: 67.03, Val Acc: 66.78
+[2019-06-04 19:26:56] Epoch 16, Train Loss: 0.912295, Val Loss: 0.988405, Train Acc: 67.02, Val Acc: 64.49
+[2019-06-04 19:35:57] Epoch 17, Train Loss: 0.902036, Val Loss: 0.920121, Train Acc: 67.42, Val Acc: 67.28
+[2019-06-04 19:44:57] Epoch 18, Train Loss: 0.890391, Val Loss: 0.916115, Train Acc: 68.03, Val Acc: 66.81
+[2019-06-04 19:53:57] Epoch 19, Train Loss: 0.889938, Val Loss: 0.928433, Train Acc: 67.77, Val Acc: 65.44
+[2019-06-04 20:02:57] Epoch 20, Train Loss: 0.882159, Val Loss: 0.924365, Train Acc: 68.05, Val Acc: 67.31
+[2019-06-04 20:11:57] Epoch 21, Train Loss: 0.880358, Val Loss: 0.894306, Train Acc: 68.19, Val Acc: 67.91
+[2019-06-04 20:20:56] Epoch 22, Train Loss: 0.870730, Val Loss: 0.889628, Train Acc: 68.56, Val Acc: 68.25
+[2019-06-04 20:29:56] Epoch 23, Train Loss: 0.857712, Val Loss: 0.887544, Train Acc: 68.88, Val Acc: 67.62
+[2019-06-04 20:38:57] Epoch 24, Train Loss: 0.856703, Val Loss: 0.902533, Train Acc: 69.17, Val Acc: 68.47
+[2019-06-04 20:47:57] Epoch 25, Train Loss: 0.842906, Val Loss: 0.891074, Train Acc: 69.39, Val Acc: 67.57
+[2019-06-04 20:56:56] Epoch 26, Train Loss: 0.841129, Val Loss: 0.908424, Train Acc: 69.75, Val Acc: 67.91
+[2019-06-04 21:05:56] Epoch 27, Train Loss: 0.837021, Val Loss: 0.897713, Train Acc: 69.73, Val Acc: 66.52
+[2019-06-04 21:14:55] Epoch 28, Train Loss: 0.825479, Val Loss: 0.855784, Train Acc: 69.92, Val Acc: 67.73
+[2019-06-04 21:23:57] Epoch 29, Train Loss: 0.829138, Val Loss: 0.865847, Train Acc: 69.79, Val Acc: 69.10
+[2019-06-04 21:32:57] Epoch 30, Train Loss: 0.824606, Val Loss: 0.874105, Train Acc: 70.00, Val Acc: 67.44
+[2019-06-04 21:41:58] Epoch 31, Train Loss: 0.810270, Val Loss: 0.841346, Train Acc: 70.33, Val Acc: 68.86
+[2019-06-04 21:51:00] Epoch 32, Train Loss: 0.813736, Val Loss: 0.865342, Train Acc: 70.23, Val Acc: 68.86
+[2019-06-04 22:00:01] Epoch 33, Train Loss: 0.806208, Val Loss: 0.868831, Train Acc: 70.81, Val Acc: 68.78
+[2019-06-04 22:09:02] Epoch 34, Train Loss: 0.795833, Val Loss: 0.851007, Train Acc: 70.88, Val Acc: 68.52
+[2019-06-04 22:18:01] Epoch 35, Train Loss: 0.796727, Val Loss: 0.862445, Train Acc: 70.84, Val Acc: 68.68
+[2019-06-04 22:27:03] Epoch 36, Train Loss: 0.790565, Val Loss: 0.849932, Train Acc: 71.30, Val Acc: 69.83
+[2019-06-04 22:36:02] Epoch 37, Train Loss: 0.786426, Val Loss: 0.870215, Train Acc: 71.39, Val Acc: 68.70
+[2019-06-04 22:45:01] Epoch 38, Train Loss: 0.780738, Val Loss: 0.886468, Train Acc: 71.30, Val Acc: 69.07
+[2019-06-04 22:54:01] Epoch 39, Train Loss: 0.782689, Val Loss: 0.808851, Train Acc: 71.41, Val Acc: 70.10
+[2019-06-04 23:03:01] Epoch 40, Train Loss: 0.774163, Val Loss: 0.840357, Train Acc: 71.70, Val Acc: 68.78
+[2019-06-04 23:12:03] Epoch 41, Train Loss: 0.768244, Val Loss: 0.831401, Train Acc: 71.79, Val Acc: 69.91
+[2019-06-04 23:21:03] Epoch 42, Train Loss: 0.766194, Val Loss: 0.813805, Train Acc: 71.93, Val Acc: 70.12
+[2019-06-04 23:30:03] Epoch 43, Train Loss: 0.760472, Val Loss: 0.807306, Train Acc: 72.08, Val Acc: 69.73
+[2019-06-04 23:39:04] Epoch 44, Train Loss: 0.748837, Val Loss: 0.807885, Train Acc: 72.48, Val Acc: 70.44
+[2019-06-04 23:48:04] Epoch 45, Train Loss: 0.751470, Val Loss: 0.815860, Train Acc: 72.60, Val Acc: 70.44
+[2019-06-04 23:57:04] Epoch 46, Train Loss: 0.747626, Val Loss: 0.837508, Train Acc: 72.44, Val Acc: 68.36
+[2019-06-05 00:06:05] Epoch 47, Train Loss: 0.746537, Val Loss: 0.819089, Train Acc: 72.76, Val Acc: 69.99
+[2019-06-05 00:15:04] Epoch 48, Train Loss: 0.733543, Val Loss: 0.811696, Train Acc: 73.16, Val Acc: 69.94
+[2019-06-05 00:24:04] Epoch 49, Train Loss: 0.739756, Val Loss: 0.801097, Train Acc: 72.84, Val Acc: 71.05
+[2019-06-05 00:33:05] Epoch 50, Train Loss: 0.736916, Val Loss: 0.776390, Train Acc: 72.89, Val Acc: 71.26
+[2019-06-05 00:42:04] Epoch 51, Train Loss: 0.727306, Val Loss: 0.777414, Train Acc: 73.50, Val Acc: 70.73
+[2019-06-05 00:51:05] Epoch 52, Train Loss: 0.723499, Val Loss: 0.815547, Train Acc: 73.60, Val Acc: 71.05
+[2019-06-05 01:00:06] Epoch 53, Train Loss: 0.717709, Val Loss: 0.830191, Train Acc: 73.51, Val Acc: 69.31
+[2019-06-05 01:09:06] Epoch 54, Train Loss: 0.723868, Val Loss: 0.787816, Train Acc: 73.48, Val Acc: 71.81
+[2019-06-05 01:18:05] Epoch 55, Train Loss: 0.713303, Val Loss: 0.831608, Train Acc: 73.74, Val Acc: 69.91
+[2019-06-05 01:27:04] Epoch 56, Train Loss: 0.715721, Val Loss: 0.792232, Train Acc: 73.87, Val Acc: 71.49
+[2019-06-05 01:36:04] Epoch 57, Train Loss: 0.705389, Val Loss: 0.796355, Train Acc: 74.23, Val Acc: 71.70
+[2019-06-05 01:45:03] Epoch 58, Train Loss: 0.699684, Val Loss: 0.786259, Train Acc: 73.98, Val Acc: 71.18
+[2019-06-05 01:54:03] Epoch 59, Train Loss: 0.703719, Val Loss: 0.795444, Train Acc: 74.18, Val Acc: 71.99
+[2019-06-05 02:03:04] Epoch 60, Train Loss: 0.700491, Val Loss: 0.794554, Train Acc: 74.24, Val Acc: 70.83
+[2019-06-05 02:12:03] Epoch 61, Train Loss: 0.699376, Val Loss: 0.808781, Train Acc: 74.49, Val Acc: 71.31
+[2019-06-05 02:21:03] Epoch 62, Train Loss: 0.692186, Val Loss: 0.805792, Train Acc: 74.48, Val Acc: 70.28
+[2019-06-05 02:30:03] Epoch 63, Train Loss: 0.689364, Val Loss: 0.812349, Train Acc: 74.57, Val Acc: 70.81
+[2019-06-05 02:39:04] Epoch 64, Train Loss: 0.686302, Val Loss: 0.797958, Train Acc: 75.04, Val Acc: 71.47
+[2019-06-05 02:48:04] Epoch 65, Train Loss: 0.680232, Val Loss: 0.794376, Train Acc: 75.00, Val Acc: 71.83
+[2019-06-05 02:57:03] Epoch 66, Train Loss: 0.678808, Val Loss: 0.803896, Train Acc: 74.93, Val Acc: 72.02
+[2019-06-05 03:06:04] Epoch 67, Train Loss: 0.671646, Val Loss: 0.801498, Train Acc: 75.35, Val Acc: 71.81
+[2019-06-05 03:15:05] Epoch 68, Train Loss: 0.664284, Val Loss: 0.780192, Train Acc: 75.75, Val Acc: 73.36
+[2019-06-05 03:24:06] Epoch 69, Train Loss: 0.666578, Val Loss: 0.774641, Train Acc: 75.39, Val Acc: 72.41
+[2019-06-05 03:33:06] Epoch 70, Train Loss: 0.659660, Val Loss: 0.831937, Train Acc: 75.72, Val Acc: 70.12
+[2019-06-05 03:42:07] Epoch 71, Train Loss: 0.660186, Val Loss: 0.781805, Train Acc: 75.45, Val Acc: 71.20
+[2019-06-05 03:51:08] Epoch 72, Train Loss: 0.655029, Val Loss: 0.808015, Train Acc: 75.57, Val Acc: 71.31
+[2019-06-05 04:00:08] Epoch 73, Train Loss: 0.652981, Val Loss: 0.783522, Train Acc: 76.17, Val Acc: 70.91
+[2019-06-05 04:09:09] Epoch 74, Train Loss: 0.653383, Val Loss: 0.822966, Train Acc: 76.03, Val Acc: 70.97
+[2019-06-05 04:18:12] Epoch 75, Train Loss: 0.647841, Val Loss: 0.808494, Train Acc: 76.14, Val Acc: 71.31
+[2019-06-05 04:27:11] Epoch 76, Train Loss: 0.646036, Val Loss: 0.811007, Train Acc: 75.98, Val Acc: 71.07
+[2019-06-05 04:36:10] Epoch 77, Train Loss: 0.648531, Val Loss: 0.773411, Train Acc: 76.13, Val Acc: 71.81
+[2019-06-05 04:45:09] Epoch 78, Train Loss: 0.643072, Val Loss: 0.804322, Train Acc: 76.17, Val Acc: 71.12
+[2019-06-05 04:54:08] Epoch 79, Train Loss: 0.635122, Val Loss: 0.792265, Train Acc: 76.11, Val Acc: 72.81
+[2019-06-05 05:03:06] Epoch 80, Train Loss: 0.642161, Val Loss: 0.818479, Train Acc: 76.25, Val Acc: 72.73
+[2019-06-05 05:12:05] Epoch 81, Train Loss: 0.632061, Val Loss: 0.773787, Train Acc: 76.56, Val Acc: 71.97
+[2019-06-05 05:21:03] Epoch 82, Train Loss: 0.630100, Val Loss: 0.781958, Train Acc: 76.67, Val Acc: 71.78
+[2019-06-05 05:30:02] Epoch 83, Train Loss: 0.628729, Val Loss: 0.803549, Train Acc: 76.43, Val Acc: 70.68
+[2019-06-05 05:39:01] Epoch 84, Train Loss: 0.628853, Val Loss: 0.779545, Train Acc: 76.79, Val Acc: 72.12
+[2019-06-05 05:48:02] Epoch 85, Train Loss: 0.619333, Val Loss: 0.833246, Train Acc: 76.93, Val Acc: 69.62
+[2019-06-05 05:57:05] Epoch 86, Train Loss: 0.618003, Val Loss: 0.769913, Train Acc: 77.15, Val Acc: 73.15
+[2019-06-05 06:06:07] Epoch 87, Train Loss: 0.618538, Val Loss: 0.800522, Train Acc: 77.14, Val Acc: 72.10
+[2019-06-05 06:15:07] Epoch 88, Train Loss: 0.614841, Val Loss: 0.784355, Train Acc: 77.45, Val Acc: 70.70
+[2019-06-05 06:24:07] Epoch 89, Train Loss: 0.613579, Val Loss: 0.758791, Train Acc: 77.37, Val Acc: 72.44
+[2019-06-05 06:33:07] Epoch 90, Train Loss: 0.604953, Val Loss: 0.770907, Train Acc: 77.41, Val Acc: 72.15
+[2019-06-05 06:42:06] Epoch 91, Train Loss: 0.607611, Val Loss: 0.805131, Train Acc: 77.46, Val Acc: 71.23
+[2019-06-05 06:51:06] Epoch 92, Train Loss: 0.609439, Val Loss: 0.754748, Train Acc: 77.28, Val Acc: 72.52
+[2019-06-05 07:00:06] Epoch 93, Train Loss: 0.602551, Val Loss: 0.770301, Train Acc: 77.59, Val Acc: 72.68
+[2019-06-05 07:09:08] Epoch 94, Train Loss: 0.602405, Val Loss: 0.791292, Train Acc: 77.62, Val Acc: 71.57
+[2019-06-05 07:18:11] Epoch 95, Train Loss: 0.601436, Val Loss: 0.775597, Train Acc: 78.00, Val Acc: 72.20
+[2019-06-05 07:27:11] Epoch 96, Train Loss: 0.595993, Val Loss: 0.785120, Train Acc: 77.87, Val Acc: 72.65
+[2019-06-05 07:36:09] Epoch 97, Train Loss: 0.592099, Val Loss: 0.777937, Train Acc: 78.18, Val Acc: 71.78
+[2019-06-05 07:45:11] Epoch 98, Train Loss: 0.591437, Val Loss: 0.765367, Train Acc: 78.19, Val Acc: 72.89
+[2019-06-05 07:54:11] Epoch 99, Train Loss: 0.591211, Val Loss: 0.765733, Train Acc: 77.95, Val Acc: 72.78
+[2019-06-05 08:03:12] Epoch 100, Train Loss: 0.593889, Val Loss: 0.784481, Train Acc: 78.00, Val Acc: 71.20
+[2019-06-05 08:12:12] Epoch 101, Train Loss: 0.582735, Val Loss: 0.773682, Train Acc: 78.38, Val Acc: 71.44
+[2019-06-05 08:21:13] Epoch 102, Train Loss: 0.578762, Val Loss: 0.777747, Train Acc: 78.72, Val Acc: 72.33
+[2019-06-05 08:30:13] Epoch 103, Train Loss: 0.580015, Val Loss: 0.767632, Train Acc: 78.65, Val Acc: 73.05
+[2019-06-05 08:39:12] Epoch 104, Train Loss: 0.583373, Val Loss: 0.790330, Train Acc: 78.37, Val Acc: 72.33
+[2019-06-05 08:48:15] Epoch 105, Train Loss: 0.579020, Val Loss: 0.792959, Train Acc: 78.59, Val Acc: 70.91
+[2019-06-05 08:57:15] Epoch 106, Train Loss: 0.575188, Val Loss: 0.795826, Train Acc: 78.82, Val Acc: 72.55
+[2019-06-05 09:06:16] Epoch 107, Train Loss: 0.576759, Val Loss: 0.794642, Train Acc: 78.83, Val Acc: 72.26
+[2019-06-05 09:15:19] Epoch 108, Train Loss: 0.567004, Val Loss: 0.801512, Train Acc: 78.90, Val Acc: 72.81
+[2019-06-05 09:24:18] Epoch 109, Train Loss: 0.568407, Val Loss: 0.799584, Train Acc: 78.81, Val Acc: 72.28
+[2019-06-05 09:33:18] Epoch 110, Train Loss: 0.564856, Val Loss: 0.767375, Train Acc: 79.09, Val Acc: 73.12
+[2019-06-05 09:42:17] Epoch 111, Train Loss: 0.563396, Val Loss: 0.774462, Train Acc: 79.60, Val Acc: 73.49
+[2019-06-05 09:51:18] Epoch 112, Train Loss: 0.560595, Val Loss: 0.749415, Train Acc: 79.60, Val Acc: 73.34
+[2019-06-05 10:00:19] Epoch 113, Train Loss: 0.567331, Val Loss: 0.780816, Train Acc: 79.33, Val Acc: 72.73
+[2019-06-05 10:09:18] Epoch 114, Train Loss: 0.562643, Val Loss: 0.802695, Train Acc: 79.06, Val Acc: 72.33
+[2019-06-05 10:18:18] Epoch 115, Train Loss: 0.559767, Val Loss: 0.786390, Train Acc: 79.05, Val Acc: 72.78
+[2019-06-05 10:27:18] Epoch 116, Train Loss: 0.557832, Val Loss: 0.775870, Train Acc: 79.13, Val Acc: 72.44
+[2019-06-05 10:36:19] Epoch 117, Train Loss: 0.551660, Val Loss: 0.795990, Train Acc: 79.64, Val Acc: 73.26
+[2019-06-05 10:45:20] Epoch 118, Train Loss: 0.550412, Val Loss: 0.803822, Train Acc: 79.66, Val Acc: 71.20
+[2019-06-05 10:54:20] Epoch 119, Train Loss: 0.556902, Val Loss: 0.778357, Train Acc: 79.52, Val Acc: 71.81
+[2019-06-05 11:03:19] Epoch 120, Train Loss: 0.552676, Val Loss: 0.772909, Train Acc: 79.39, Val Acc: 72.55
+[2019-06-05 11:12:19] Epoch 121, Train Loss: 0.548632, Val Loss: 0.791682, Train Acc: 79.81, Val Acc: 72.44
+[2019-06-05 11:21:20] Epoch 122, Train Loss: 0.542706, Val Loss: 0.772728, Train Acc: 79.83, Val Acc: 73.91
+[2019-06-05 11:30:20] Epoch 123, Train Loss: 0.547818, Val Loss: 0.795460, Train Acc: 79.77, Val Acc: 72.52
+[2019-06-05 11:39:19] Epoch 124, Train Loss: 0.545594, Val Loss: 0.808803, Train Acc: 79.83, Val Acc: 71.39
+[2019-06-05 11:48:17] Epoch 125, Train Loss: 0.542310, Val Loss: 0.764562, Train Acc: 79.92, Val Acc: 72.70
+[2019-06-05 11:57:16] Epoch 126, Train Loss: 0.539387, Val Loss: 0.782616, Train Acc: 79.81, Val Acc: 72.55
+[2019-06-05 12:06:15] Epoch 127, Train Loss: 0.539957, Val Loss: 0.824211, Train Acc: 79.95, Val Acc: 71.44
+[2019-06-05 12:15:17] Epoch 128, Train Loss: 0.541828, Val Loss: 0.799271, Train Acc: 80.00, Val Acc: 72.41
+[2019-06-05 12:24:17] Epoch 129, Train Loss: 0.536576, Val Loss: 0.783263, Train Acc: 80.46, Val Acc: 73.31
+[2019-06-05 12:33:17] Epoch 130, Train Loss: 0.540973, Val Loss: 0.812218, Train Acc: 79.83, Val Acc: 71.81
+[2019-06-05 12:42:19] Epoch 131, Train Loss: 0.526643, Val Loss: 0.775217, Train Acc: 80.56, Val Acc: 72.31
+[2019-06-05 12:51:22] Epoch 132, Train Loss: 0.530542, Val Loss: 0.807158, Train Acc: 80.54, Val Acc: 72.44
+[2019-06-05 13:00:21] Epoch 133, Train Loss: 0.527291, Val Loss: 0.823720, Train Acc: 80.54, Val Acc: 72.28
+[2019-06-05 13:09:21] Epoch 134, Train Loss: 0.526847, Val Loss: 0.806373, Train Acc: 80.86, Val Acc: 71.70
+[2019-06-05 13:18:20] Epoch 135, Train Loss: 0.526608, Val Loss: 0.782504, Train Acc: 80.64, Val Acc: 71.65
+[2019-06-05 13:27:23] Epoch 136, Train Loss: 0.525396, Val Loss: 0.821524, Train Acc: 80.75, Val Acc: 72.91
+[2019-06-05 13:36:23] Epoch 137, Train Loss: 0.523419, Val Loss: 0.783941, Train Acc: 80.63, Val Acc: 73.70
+[2019-06-05 13:45:23] Epoch 138, Train Loss: 0.523415, Val Loss: 0.788934, Train Acc: 80.68, Val Acc: 71.97
+[2019-06-05 13:54:23] Epoch 139, Train Loss: 0.515840, Val Loss: 0.841419, Train Acc: 81.06, Val Acc: 69.10
+[2019-06-05 14:03:24] Epoch 140, Train Loss: 0.519871, Val Loss: 0.885665, Train Acc: 80.77, Val Acc: 70.78
+[2019-06-05 14:12:24] Epoch 141, Train Loss: 0.518180, Val Loss: 0.808267, Train Acc: 80.92, Val Acc: 72.55
+[2019-06-05 14:21:26] Epoch 142, Train Loss: 0.520064, Val Loss: 0.808230, Train Acc: 80.82, Val Acc: 72.18
+[2019-06-05 14:30:27] Epoch 143, Train Loss: 0.516959, Val Loss: 0.768562, Train Acc: 80.92, Val Acc: 72.52
+[2019-06-05 14:39:28] Epoch 144, Train Loss: 0.515269, Val Loss: 0.830461, Train Acc: 81.11, Val Acc: 72.86
+[2019-06-05 14:48:27] Epoch 145, Train Loss: 0.504321, Val Loss: 0.794217, Train Acc: 81.14, Val Acc: 72.18
+[2019-06-05 14:57:28] Epoch 146, Train Loss: 0.505452, Val Loss: 0.841897, Train Acc: 81.40, Val Acc: 71.94
+[2019-06-05 15:06:29] Epoch 147, Train Loss: 0.508750, Val Loss: 0.816787, Train Acc: 81.14, Val Acc: 71.91
+[2019-06-05 15:15:30] Epoch 148, Train Loss: 0.512330, Val Loss: 0.798001, Train Acc: 81.27, Val Acc: 71.31
+[2019-06-05 15:24:29] Epoch 149, Train Loss: 0.503973, Val Loss: 0.829126, Train Acc: 81.18, Val Acc: 72.81
+[2019-06-05 15:33:28] Epoch 150, Train Loss: 0.507378, Val Loss: 0.828778, Train Acc: 81.25, Val Acc: 71.94
+[2019-06-05 15:42:27] Epoch 151, Train Loss: 0.508018, Val Loss: 0.792644, Train Acc: 81.19, Val Acc: 72.57
+[2019-06-05 15:51:26] Epoch 152, Train Loss: 0.503842, Val Loss: 0.761201, Train Acc: 81.47, Val Acc: 73.52
+[2019-06-05 16:00:26] Epoch 153, Train Loss: 0.502941, Val Loss: 0.811128, Train Acc: 81.66, Val Acc: 71.41
+[2019-06-05 16:09:28] Epoch 154, Train Loss: 0.503230, Val Loss: 0.776205, Train Acc: 81.07, Val Acc: 73.15
+[2019-06-05 16:18:29] Epoch 155, Train Loss: 0.496036, Val Loss: 0.790227, Train Acc: 81.67, Val Acc: 73.02
+[2019-06-05 16:27:31] Epoch 156, Train Loss: 0.496779, Val Loss: 0.814371, Train Acc: 81.69, Val Acc: 71.23
+[2019-06-05 16:36:33] Epoch 157, Train Loss: 0.496518, Val Loss: 0.774845, Train Acc: 81.59, Val Acc: 73.52
+[2019-06-05 16:45:33] Epoch 158, Train Loss: 0.487241, Val Loss: 0.787139, Train Acc: 82.10, Val Acc: 73.10
+[2019-06-05 16:54:33] Epoch 159, Train Loss: 0.495880, Val Loss: 0.772115, Train Acc: 81.73, Val Acc: 73.10
+[2019-06-05 17:03:33] Epoch 160, Train Loss: 0.495043, Val Loss: 0.819627, Train Acc: 81.93, Val Acc: 72.52
+[2019-06-05 17:12:34] Epoch 161, Train Loss: 0.487508, Val Loss: 0.816658, Train Acc: 82.00, Val Acc: 70.91
+[2019-06-05 17:21:33] Epoch 162, Train Loss: 0.489676, Val Loss: 0.779709, Train Acc: 81.97, Val Acc: 72.73
+[2019-06-05 17:30:33] Epoch 163, Train Loss: 0.481540, Val Loss: 0.829947, Train Acc: 81.98, Val Acc: 72.28
+[2019-06-05 17:39:36] Epoch 164, Train Loss: 0.484290, Val Loss: 0.862368, Train Acc: 82.03, Val Acc: 70.12
+[2019-06-05 17:48:37] Epoch 165, Train Loss: 0.485396, Val Loss: 0.791863, Train Acc: 82.27, Val Acc: 71.70
+[2019-06-05 17:57:36] Epoch 166, Train Loss: 0.491399, Val Loss: 0.819362, Train Acc: 81.98, Val Acc: 72.39
+[2019-06-05 18:06:36] Epoch 167, Train Loss: 0.487495, Val Loss: 0.790403, Train Acc: 81.97, Val Acc: 72.57
+[2019-06-05 18:15:36] Epoch 168, Train Loss: 0.483039, Val Loss: 0.853842, Train Acc: 82.08, Val Acc: 71.44
+[2019-06-05 18:24:36] Epoch 169, Train Loss: 0.481523, Val Loss: 0.782532, Train Acc: 82.08, Val Acc: 72.62
+[2019-06-05 18:33:35] Epoch 170, Train Loss: 0.476230, Val Loss: 0.815189, Train Acc: 82.38, Val Acc: 72.65
+[2019-06-05 18:42:35] Epoch 171, Train Loss: 0.478006, Val Loss: 0.838333, Train Acc: 82.23, Val Acc: 70.12
+[2019-06-05 18:51:35] Epoch 172, Train Loss: 0.483443, Val Loss: 0.785097, Train Acc: 82.39, Val Acc: 73.28
+[2019-06-05 19:00:36] Epoch 173, Train Loss: 0.473309, Val Loss: 0.809736, Train Acc: 82.46, Val Acc: 73.02
+[2019-06-05 19:09:36] Epoch 174, Train Loss: 0.474740, Val Loss: 0.775045, Train Acc: 82.17, Val Acc: 73.47
+[2019-06-05 19:18:35] Epoch 175, Train Loss: 0.473190, Val Loss: 0.853480, Train Acc: 82.64, Val Acc: 72.65
+[2019-06-05 19:27:35] Epoch 176, Train Loss: 0.475033, Val Loss: 0.817676, Train Acc: 82.41, Val Acc: 73.23
+[2019-06-05 19:36:35] Epoch 177, Train Loss: 0.469541, Val Loss: 0.833411, Train Acc: 82.77, Val Acc: 71.91
+[2019-06-05 19:45:39] Epoch 178, Train Loss: 0.470977, Val Loss: 0.806665, Train Acc: 82.55, Val Acc: 73.73
+[2019-06-05 19:54:43] Epoch 179, Train Loss: 0.472311, Val Loss: 0.827256, Train Acc: 82.39, Val Acc: 71.89
+[2019-06-05 20:03:44] Epoch 180, Train Loss: 0.473621, Val Loss: 0.817923, Train Acc: 82.42, Val Acc: 70.54
+[2019-06-05 20:12:43] Epoch 181, Train Loss: 0.466639, Val Loss: 0.806123, Train Acc: 82.53, Val Acc: 71.89
+[2019-06-05 20:21:41] Epoch 182, Train Loss: 0.463052, Val Loss: 0.865815, Train Acc: 82.98, Val Acc: 71.89
+[2019-06-05 20:30:40] Epoch 183, Train Loss: 0.467815, Val Loss: 0.801289, Train Acc: 82.35, Val Acc: 73.05
+[2019-06-05 20:39:41] Epoch 184, Train Loss: 0.463736, Val Loss: 0.803692, Train Acc: 83.01, Val Acc: 72.52
+[2019-06-05 20:48:43] Epoch 185, Train Loss: 0.466370, Val Loss: 0.787909, Train Acc: 82.63, Val Acc: 72.60
+[2019-06-05 20:57:42] Epoch 186, Train Loss: 0.468483, Val Loss: 0.770646, Train Acc: 82.57, Val Acc: 73.55
+[2019-06-05 21:06:42] Epoch 187, Train Loss: 0.464385, Val Loss: 0.810858, Train Acc: 82.79, Val Acc: 71.94
+[2019-06-05 21:15:43] Epoch 188, Train Loss: 0.462051, Val Loss: 0.798426, Train Acc: 82.77, Val Acc: 73.05
+[2019-06-05 21:24:46] Epoch 189, Train Loss: 0.461258, Val Loss: 0.823076, Train Acc: 82.99, Val Acc: 71.91
+[2019-06-05 21:33:45] Epoch 190, Train Loss: 0.459174, Val Loss: 0.820635, Train Acc: 83.09, Val Acc: 72.26
+[2019-06-05 21:42:45] Epoch 191, Train Loss: 0.464338, Val Loss: 0.800820, Train Acc: 82.83, Val Acc: 73.41
+[2019-06-05 21:51:45] Epoch 192, Train Loss: 0.458134, Val Loss: 0.776541, Train Acc: 83.11, Val Acc: 72.86
+[2019-06-05 22:00:46] Epoch 193, Train Loss: 0.457724, Val Loss: 0.781634, Train Acc: 82.95, Val Acc: 73.99
+[2019-06-05 22:09:46] Epoch 194, Train Loss: 0.456253, Val Loss: 0.852302, Train Acc: 82.99, Val Acc: 72.60
+[2019-06-05 22:18:46] Epoch 195, Train Loss: 0.457121, Val Loss: 0.786628, Train Acc: 83.17, Val Acc: 73.23
+[2019-06-05 22:27:46] Epoch 196, Train Loss: 0.453729, Val Loss: 0.807494, Train Acc: 83.16, Val Acc: 71.91
+[2019-06-05 22:36:46] Epoch 197, Train Loss: 0.457651, Val Loss: 0.896939, Train Acc: 83.06, Val Acc: 72.12
+[2019-06-05 22:45:46] Epoch 198, Train Loss: 0.451112, Val Loss: 0.804527, Train Acc: 83.25, Val Acc: 73.68
+[2019-06-05 22:54:45] Epoch 199, Train Loss: 0.450215, Val Loss: 0.809455, Train Acc: 83.48, Val Acc: 71.97
+[2019-06-05 23:03:44] Epoch 200, Train Loss: 0.453188, Val Loss: 0.804376, Train Acc: 83.30, Val Acc: 72.20
+
+------------------------
+Best Validation Accuracy 73.9932 at epoch 193
+------------------------
+

@@ -1,0 +1,18 @@
+{
+  "verbose": false,
+  "lr_scheduler": false,
+  "depth_coefficient": 1.0,
+  "learning_rate": 0.001,
+  "epochs": 200,
+  "compound_coefficient": 1.0,
+  "width_coefficient": 1.0,
+  "model_name": "efficientnet",
+  "output_dir": "results/efficientnet_adam_0.001_d1.0_w1.0_r1.0_c1.0/",
+  "crop_size": 224,
+  "batch_size": 32,
+  "data_augmentation": false,
+  "img_size": 256,
+  "resolution_coefficient": 1.0,
+  "optimizer": "adam",
+  "path_extension": ""
+}
