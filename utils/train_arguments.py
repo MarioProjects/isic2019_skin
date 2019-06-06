@@ -57,10 +57,10 @@ if args.output_dir == "results/new_logs+train_info":
     if args.path_extension != "": optional_info += "_" + args.path_extension
     args.output_dir = "results/new_logs_{}_{}".format(args.model_name, args.optimizer, optional_info)
 
-    if not os.path.exists(args.output_dir):
-        os.makedirs(args.output_dir)
+if not os.path.exists(args.output_dir):
+    os.makedirs(args.output_dir)
 
-    # Save arguments
-    # https://stackoverflow.com/a/55114771
-    with open(args.output_dir + '/commandline_args.txt', 'w') as f:
-        json.dump(args.__dict__, f, indent=2)
+# Save arguments
+# https://stackoverflow.com/a/55114771
+with open(args.output_dir + '/commandline_args.txt', 'w') as f:
+    json.dump(args.__dict__, f, indent=2)
