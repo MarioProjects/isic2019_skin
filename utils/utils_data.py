@@ -25,9 +25,69 @@ CATEGORIES_DIAGNOSTIC = {v: k for k, v in DIAGNOSTIC_CATEGORIES.items()}
 CATEGORIES_CLASS = {"MEL": 0, "NV": 1, "BCC": 2, "AK": 3, "BKL": 4, "DF": 5, "VASC": 6, "SCC": 7, "UNK": 8}
 CLASS_CATEGORIES = {v: k for k, v in CATEGORIES_CLASS.items()}
 
+VALIDATION_FILE = ISIC_PATH + "valid.txt"
+VALIDATION_IMGS = open(VALIDATION_FILE).read().split('\n')
+for indx, img in enumerate(VALIDATION_IMGS):
+    # Corregimos el path para que sea absoluto
+    VALIDATION_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+
+TRAIN_FILE = ISIC_PATH + "train.txt"
+TRAIN_IMGS = open(TRAIN_FILE).read().split('\n')
+for indx, img in enumerate(TRAIN_IMGS):
+    # Corregimos el path para que sea absoluto
+    TRAIN_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+
+
+class ISIC2019_FromFolders(data.Dataset):
+
+    def __init__(self, data_partition="", transforms=None, albumentation=None):
+        """
+          - data_partition:
+             -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
+             -> Si es "train" devuelve 85% muestras de todo el TRAIN
+             -> Si es "validation" devuelve 15% muestras de todo el TRAIN
+        """
+        self.root_path = ROOT_PATH[data_partition]
+
+        if data_partition == "train":
+            self.imgs = TRAIN_IMGS
+        elif data_partition == "validation":
+            self.imgs = VALIDATION_IMGS
+
+        self.data_partition = data_partition
+        self.albumentation = albumentation
+        self.transform = transforms
+
+    def __len__(self):
+        return len(self.imgs)
+
+    def __getitem__(self, index):
+
+        img_path = self.imgs[index]
+        image = io.imread(img_path)
+
+        img_name = img_path.split("/")[-1]
+        img_name = img_name[:img_name.find(".jpg")]  # quitamos la extension del nombre
+
+        target = ISIC_TRAIN_DF_TRUTH.loc[ISIC_TRAIN_DF_TRUTH.image == img_name].target.values[0]
+
+        if self.transform:
+            image = self.transform(image)
+
+        if self.albumentation:
+            try:
+                augmented = self.albumentation_img(image=image)
+                image = augmented['image']
+            except:
+                assert False, "Transform error in file: " + img_name
+
+        return image, target
+
 
 class ISIC2019_Dataset(data.Dataset):
-
+    ### -----------------------------------------------
+    ### DEPRECATED! -> USE INSTEAD ISIC2019_FromFolders
+    ### -----------------------------------------------
     def __init__(self, data_partition="", transforms=None, albumentation=None, validation_size=0.15, seed=42):
         """
           - data_partition:

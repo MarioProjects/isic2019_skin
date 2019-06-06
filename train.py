@@ -35,10 +35,10 @@ val_aug = albumentations.Compose([
 if args.data_augmentation:
     print("Data Augmentation to be implemented...")
 
-train_dataset = ISIC2019_Dataset(data_partition="train", albumentation=train_aug)
+train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug)
 train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
 
-val_dataset = ISIC2019_Dataset(data_partition="validation", albumentation=val_aug)
+val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 print("Data loaded!\n")
 
