@@ -65,10 +65,6 @@ class ISIC2019_FromFolders(data.Dataset):
 
         img_path = self.imgs[index]
         image = io.imread(img_path)
-
-        img_name = img_path.split("/")[-1]
-        img_name = img_name[:img_name.find(".jpg")]  # quitamos la extension del nombre
-
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
 
         if self.transform:
@@ -79,8 +75,9 @@ class ISIC2019_FromFolders(data.Dataset):
                 augmented = self.albumentation(image=image)
                 image = augmented['image']
             except:
-                assert False, "Transform error in file: " + img_name
+                assert False, "Transform error in file: " + img_path
 
+        image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
 
