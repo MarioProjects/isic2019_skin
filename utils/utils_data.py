@@ -69,7 +69,7 @@ class ISIC2019_FromFolders(data.Dataset):
         img_name = img_path.split("/")[-1]
         img_name = img_name[:img_name.find(".jpg")]  # quitamos la extension del nombre
 
-        target = ISIC_TRAIN_DF_TRUTH.loc[ISIC_TRAIN_DF_TRUTH.image == img_name].target.values[0]
+        target = CATEGORIES_CLASS[img_path.split("/")[-2]]
 
         if self.transform:
             image = self.transform(image)
