@@ -76,7 +76,7 @@ class ISIC2019_FromFolders(data.Dataset):
 
         if self.albumentation:
             try:
-                augmented = self.albumentation_img(image=image)
+                augmented = self.albumentation(image=image)
                 image = augmented['image']
             except:
                 assert False, "Transform error in file: " + img_name
