@@ -34,7 +34,6 @@ parser.add_argument('--compound_coefficient', type=float, default=1.0,
                     help='[Efficientnet] compound coefficient φ to uniformly scales network width, depth, and resolution')
 
 parser.add_argument('--learning_rate', type=float, default=0.001, help='Learning rate')
-parser.add_argument('--lr_scheduler', action='store_true', help='Use a LR scheduler to control LR')
 parser.add_argument('--data_augmentation', action='store_true', help='Apply data augmentations at train time')
 
 parser.add_argument('--img_size', type=int, default=256, help='Initial image size (square img)')
@@ -52,7 +51,6 @@ except:
 
 if args.output_dir == "results/new_logs+train_info":
     optional_info = ""
-    if args.lr_scheduler: optional_info += "_LRScheduler"
     if args.data_augmentation: optional_info += "_DA"
     if args.path_extension != "": optional_info += "_" + args.path_extension
     args.output_dir = "results/new_logs_{}_{}".format(args.model_name, args.optimizer, optional_info)
