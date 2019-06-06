@@ -52,7 +52,7 @@ best_loss, best_accuracy = 10e10, -1
 
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
-scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 135, 170], gamma=0.2)
+scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.15)
 
 for argument in args.__dict__:
     print("{}: {}".format(argument, args.__dict__[argument]))
@@ -91,8 +91,7 @@ for current_epoch in range(args.epochs):
     with open(args.output_dir + 'progress.pickle', 'wb') as handle:
         pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    if args.lr_scheduler:
-        scheduler.step()
+    scheduler.step()
 
 print("\n------------------------")
 print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
