@@ -27,6 +27,8 @@ parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
 
+parser.add_argument('--balanced_sampler', type=str, default='', help='Use a balanced train dataloader')
+
 parser.add_argument('--depth_coefficient', type=float, default=1.0, help='[Efficientnet] Depth Coefficient')
 parser.add_argument('--width_coefficient', type=float, default=1.0, help='[Efficientnet] Width Coefficient')
 parser.add_argument('--resolution_coefficient', type=float, default=1.0, help='[Efficientnet] Resolution Coefficient')

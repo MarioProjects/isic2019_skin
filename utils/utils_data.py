@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 from skimage import io
 from torch.utils import data
+import torchy
+import pickle
 
 ISIC_PATH = "/home/maparla/DeepLearning/Datasets/ISIC2019/"
 ISIC_TRAIN_ROOT_PATH = ISIC_PATH + "ISIC_2019_Training_Input"
@@ -41,6 +43,18 @@ for indx, img in enumerate(TRAIN_IMGS):
         TRAIN_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
 TRAIN_IMGS = list(filter(None, TRAIN_IMGS)) # Sanity check no empty lines/items in list
 
+
+def get_sampler_weights():
+    if not os.path.exists("weights_sampler.pickle"):
+        TRAIN_REAL_INDEXES = []
+        for train_img in TRAIN_IMGS:
+            img = train_img[train_img.find("ISIC_"):train_img.find(".jpg")]
+            real_index = ISIC_TRAIN_DF_TRUTH.loc[ISIC_TRAIN_DF_TRUTH['image'] == img].index.values.astype(int)[0]
+            TRAIN_REAL_INDEXES.append(real_index)
+        torchy.utils.create_sampler_weights(ISIC_TRAIN_DF_TRUTH.loc[TRAIN_REAL_INDEXES], "target", "weights_sampler.pickle")
+    with open('weights_sampler.pickle', 'rb') as fp:
+        sampler_weights = pickle.load(fp)
+    return sampler_weights
 
 class ISIC2019_FromFolders(data.Dataset):
 

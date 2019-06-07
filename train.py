@@ -10,6 +10,7 @@ import albumentations
 import math
 import torch.nn as nn
 from torch.utils.data import DataLoader
+import torchy
 
 # ---- My utils ----
 from utils.train_arguments import *
@@ -36,7 +37,15 @@ if args.data_augmentation:
     print("Data Augmentation to be implemented...")
 
 train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug)
-train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
+
+if args.balanced_sampler:
+    sampler_weights = get_sampler_weights()
+    assert len(sampler_weights)==len(train_dataset), "Weights for data balancing not correspond to dataset"
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(sampler_weights, len(sampler_weights))
+    train_loader = DataLoader(train_dataset, pin_memory=True, shuffle=False, sampler=sampler, batch_size=args.batch_size)
+else:
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
+
 
 val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
