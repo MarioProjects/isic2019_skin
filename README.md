@@ -92,7 +92,7 @@ Some techniques that we are using or should be used, as a reminder, are:
 |     Optimizer     |            LR Planning               |   Additional Info    |       Results   |
 |:-----------------:|:------------------------------------:|:--------------------:|:---------------:|
 |   Adam Decay      |   Constant LR (expertise) 0.001      |                      |      0.739932   |
-|   Adam Decay      |   Constant LR (Finder-1exp) 0.01     |                      |       ToRun     |
+|   Adam Decay      |     Step LR (Finder-1exp) 0.01       |                      |   Running gpu17 |
 |  Adam Default     |        Step LR (Finder) 0.1          |                      |       ToRun     |
 | Adam Nesterov     |        Step LR (Finder) 0.1          |                      |       ToRun     |
 |  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |                      |   ~~Discarded~~ |
