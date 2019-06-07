@@ -1,0 +1,18 @@
+{
+  "data_augmentation": false,
+  "lr_scheduler": false,
+  "img_size": 256,
+  "depth_coefficient": 1.0,
+  "crop_size": 224,
+  "optimizer": "sgd",
+  "width_coefficient": 1.0,
+  "resolution_coefficient": 1.0,
+  "path_extension": "",
+  "epochs": 200,
+  "verbose": false,
+  "batch_size": 32,
+  "compound_coefficient": 1.0,
+  "model_name": "efficientnet",
+  "output_dir": "results/efficientnet_sgd_1_d1.0_w1.0_r1.0_c1.0/",
+  "learning_rate": 1.0
+}
