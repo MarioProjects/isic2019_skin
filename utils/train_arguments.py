@@ -49,11 +49,14 @@ except:
     print("Working with Jupyter notebook! (Default Arguments)")
     args = parser.parse_args("")
 
+optional_info = ""
+if args.data_augmentation: optional_info += "_DA"
+if args.path_extension != "": optional_info += "_" + args.path_extension
+
 if args.output_dir == "results/new_logs+train_info":
-    optional_info = ""
-    if args.data_augmentation: optional_info += "_DA"
-    if args.path_extension != "": optional_info += "_" + args.path_extension
     args.output_dir = "results/new_logs_{}_{}".format(args.model_name, args.optimizer, optional_info)
+else:
+    args.output_dir = args.output_dir + optional_info
 
 if not os.path.exists(args.output_dir):
     os.makedirs(args.output_dir)

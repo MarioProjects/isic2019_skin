@@ -29,13 +29,17 @@ VALIDATION_FILE = ISIC_PATH + "valid.txt"
 VALIDATION_IMGS = open(VALIDATION_FILE).read().split('\n')
 for indx, img in enumerate(VALIDATION_IMGS):
     # Corregimos el path para que sea absoluto
-    VALIDATION_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+    if '.jpg' in img:
+        VALIDATION_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+VALIDATION_IMGS = list(filter(None, VALIDATION_IMGS)) # Sanity check no empty lines/items in list
 
 TRAIN_FILE = ISIC_PATH + "train.txt"
 TRAIN_IMGS = open(TRAIN_FILE).read().split('\n')
 for indx, img in enumerate(TRAIN_IMGS):
     # Corregimos el path para que sea absoluto
-    TRAIN_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+    if '.jpg' in img:
+        TRAIN_IMGS[indx] = ISIC_PATH + "Train/" + "/".join(img.split("/")[1:])
+TRAIN_IMGS = list(filter(None, TRAIN_IMGS)) # Sanity check no empty lines/items in list
 
 
 class ISIC2019_FromFolders(data.Dataset):
@@ -64,7 +68,10 @@ class ISIC2019_FromFolders(data.Dataset):
     def __getitem__(self, index):
 
         img_path = self.imgs[index]
-        image = io.imread(img_path)
+        try:
+            image = io.imread(img_path)
+        except:
+            assert False, "Error in file: {}".format(img_path)
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
 
         if self.transform:
