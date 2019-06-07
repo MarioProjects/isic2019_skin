@@ -101,7 +101,7 @@ Some techniques that we are using or should be used, as a reminder, are:
 |  SGD Momentum     |      Step LR (Expertise) 0.01        |                      |   Running gpu21 |
 |  SGD Default      |      Constant LR (Finder) 1          |                      |      0.785996   |
 |  SGD Default      |        Step LR (Finder) 1            |                      |   Running gpu18 |
-|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |       ToRun     | 
+|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 | 
 
 ### Reminders
 - Confusion Matrix

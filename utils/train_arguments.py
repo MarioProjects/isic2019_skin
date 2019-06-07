@@ -27,7 +27,7 @@ parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
 
-parser.add_argument('--balanced_sampler', type=str, default='', help='Use a balanced train dataloader')
+parser.add_argument('--balanced_sampler', action='store_true', help='Use a balanced train dataloader')
 
 parser.add_argument('--depth_coefficient', type=float, default=1.0, help='[Efficientnet] Depth Coefficient')
 parser.add_argument('--width_coefficient', type=float, default=1.0, help='[Efficientnet] Width Coefficient')
@@ -53,6 +53,7 @@ except:
 
 optional_info = ""
 if args.data_augmentation: optional_info += "_DA"
+if args.balanced_sampler: optional_info += "_batchBalanced"
 if args.path_extension != "": optional_info += "_" + args.path_extension
 
 if args.output_dir == "results/new_logs+train_info":
