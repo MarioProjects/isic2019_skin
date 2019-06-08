@@ -46,11 +46,16 @@ Skin Lesion Analysis Towards Melanoma Detection.
 ### Reproducibility
 
 If you want to be able to work with the techniques and models discussed here, 
-it is necessary to install certain packages. To facilitate this, the use of Docker is proposed:
+it is necessary to install certain packages. To facilitate this, the use of Docker is proposed. 
+First, access the docker folder of this repository and execute the following command:
 
 ```bash
-ToDo
+sudo ./reproduce.sh
 ```
+
+This will download the ISIC data into your $ {HOME} / data folder and clone this repository to $ {HOME}. 
+Finally, you will create an image with pytorch and the necessary packages to use the models proposed here 
+and start that image, assembling the data and the repository in the home.
 
 ### ToTest Techniques
 
@@ -61,24 +66,24 @@ Some techniques that we are using or should be used, as a reminder, are:
 
 ### Testing Phases
 
-- [x] [LR Finder](https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0) 
+- [x] PHASE 0 - [LR Finder](https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0) 
 
-- [ ] Optimization Algorithms
-  + [ ] Adam
-  + [ ] SGD Momentum
-  + [ ] SGD Default
-  + [ ] RMSprop Momentum
-  + [ ] RMSprop Default
+- [x] PHASE 1 - Optimization Algorithms
+  + [x] Adam
+  + [x] SGD Momentum
+  + [x] SGD Default
+  + [x] RMSprop Momentum
+  + [x] RMSprop Default
 
-- [ ] Data Augmentation
+- [ ] PHASE 2 - Data Augmentation
   + [ ] [Fast Autoaugment (transfer?)](https://arxiv.org/abs/1905.00397)
 
-- [ ] [EfficientNet Explotation](https://arxiv.org/pdf/1905.11946.pdf) 
+- [ ] PHASE 3 - [EfficientNet Explotation](https://arxiv.org/pdf/1905.11946.pdf) 
   + [ ] Coefficients Search
   + [ ] Scale EfficientNet 
   + [ ] Compare with powerful Model (ResNet?)
 
-- [ ] Improvement Techniques
+- [ ] PHASE 4 - Improvement Techniques
   + [ ] [Pair Sampling](https://arxiv.org/pdf/1801.02929.pdf)
   + [ ] [Snapshot Ensembling](https://arxiv.org/abs/1704.00109)
   + [ ] Test Time Augmentations
@@ -91,17 +96,19 @@ Some techniques that we are using or should be used, as a reminder, are:
 
 |     Optimizer     |            LR Planning               |   Additional Info    |       Results   |
 |:-----------------:|:------------------------------------:|:--------------------:|:---------------:|
-|   Adam Decay      |   Constant LR (expertise) 0.001      |                      |      0.739932   |
-|   Adam Decay      |     Step LR (Finder-1exp) 0.01       |                      |   Running gpu17 |
-|  Adam Default     |        Step LR (Finder) 0.1          |                      |       ToRun     |
-| Adam Nesterov     |        Step LR (Finder) 0.1          |                      |       ToRun     |
-|  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |                      |   ~~Discarded~~ |
-|  ~~SGD Momentum~~ |   ~~Constant LR (Finder-1exp) 0.1~~  |                      |   ~~Discarded~~ |
-|  SGD Momentum     |   Constant LR (Expertise) 0.01       |                      |      0.747039   |
-|  SGD Momentum     |      Step LR (Expertise) 0.01        |                      |   Running gpu21 |
-|  SGD Default      |      Constant LR (Finder) 1          |                      |      0.785996   |
-|  SGD Default      |        Step LR (Finder) 1            |                      |   Running gpu18 |
+|   Adam Decay      |   Constant LR (expertise) 0.001      |  ------------------  |      0.739932   |
+|  ~~Adam Decay~~   |     ~~Step LR (Finder-1exp) 0.01~~   |  ------------------  |   ~~Discarded~~ |
+|  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |  ------------------  |   ~~Discarded~~ |
+|  ~~SGD Momentum~~ |   ~~Constant LR (Finder-1exp) 0.1~~  |  ------------------  |   ~~Discarded~~ |
+|  SGD Momentum     |   Constant LR (Expertise) 0.01       |  ------------------  |      0.747039   |
+|  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |   Running gpu21 |
+|  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.785996   |
+|  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.786260   |
 |  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 | 
+
+
+Sonclusions: the optimizer that has worked best has generally been SGD, 
+so we will choose this for the following phases.
 
 ### Reminders
 - Confusion Matrix
