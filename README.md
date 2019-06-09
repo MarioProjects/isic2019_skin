@@ -63,6 +63,8 @@ Some techniques that we are using or should be used, as a reminder, are:
 - [ ] Good Data Sampler
 - [ ] AUC Cost Function (If AUC as main Metric)
 - [ ] Special Data Augmentation 
+- [ ] More data? [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)
+- [ ] [Balanced accuracy score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html)
 
 ### Testing Phases
 
@@ -94,17 +96,17 @@ Some techniques that we are using or should be used, as a reminder, are:
 
 #### PHASE 1 . Optimizer testing
 
-|     Optimizer     |            LR Planning               |   Additional Info    |       Results   |
-|:-----------------:|:------------------------------------:|:--------------------:|:---------------:|
-|   Adam Decay      |   Constant LR (expertise) 0.001      |  ------------------  |      0.739932   |
-|  ~~Adam Decay~~   |     ~~Step LR (Finder-1exp) 0.01~~   |  ------------------  |   ~~Discarded~~ |
-|  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |  ------------------  |   ~~Discarded~~ |
-|  ~~SGD Momentum~~ |   ~~Constant LR (Finder-1exp) 0.1~~  |  ------------------  |   ~~Discarded~~ |
-|  SGD Momentum     |   Constant LR (Expertise) 0.01       |  ------------------  |      0.747039   |
-|  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |      0.799473   |
-|  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.785996   |
-|  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.786260   |
-|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 | 
+|     Optimizer     |            LR Planning               |   Additional Info    |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:--------------------:|:---------------:|:-------------------:|
+|   Adam Decay      |   Constant LR (expertise) 0.001      |  ------------------  |      0.7399     |                     |
+|  ~~Adam Decay~~   |     ~~Step LR (Finder-1exp) 0.01~~   |  ------------------  |   ~~Discarded~~ |                     |
+|  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |  ------------------  |   ~~Discarded~~ |                     |
+|  ~~SGD Momentum~~ |   ~~Constant LR (Finder-1exp) 0.1~~  |  ------------------  |   ~~Discarded~~ |                     |
+|  SGD Momentum     |   Constant LR (Expertise) 0.01       |  ------------------  |      0.7470     |                     |
+|  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |      0.7994     |       0.6897        |
+|  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.7859     |                     |
+|  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.7862     |                     |
+|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 |                     |
 
 
 Sonclusions: the optimizer that has worked best has generally been SGD, 
