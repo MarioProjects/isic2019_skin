@@ -1,0 +1,21 @@
+FROM pytorch/pytorch
+
+# UNAME, UID and GID will be overwrited at docker build (creater_docker.sh)
+ARG UNAME=xxxxx
+ARG UID=9999
+ARG GID=9999
+RUN groupadd -g $GID $UNAME
+RUN useradd -m -u $UID -g $GID -s /bin/bash $UNAME
+
+MAINTAINER Mario Parreño Lara
+RUN apt-get update
+# Necessary for albumentations
+RUN apt-get install -y libglib2.0-0
+RUN pip install --upgrade pip
+RUN pip install numpy pandas
+RUN pip install sklearn
+RUN pip install seaborn matplotlib
+RUN pip install jupyter notebook
+RUN pip install albumentations
+RUN pip install websocket websocket-client slackclient==2.0.0
+RUN pip install git+https://github.com/MarioProjects/torchy.git
