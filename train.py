@@ -5,9 +5,10 @@
 
 import pickle
 from time import gmtime, strftime
-
-import albumentations
 import math
+
+from sklearn.metrics import balanced_accuracy_score
+import albumentations
 import torch.nn as nn
 from torch.utils.data import DataLoader
 import torchy
@@ -56,8 +57,9 @@ print("{} Classes detected!".format(num_classes))
 model = model_selector(args.model_name, num_classes, args.depth_coefficient, args.width_coefficient)
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
 
-progress_train_loss, progress_val_loss, progress_train_acc, progress_val_acc = [], [], [], []
-best_loss, best_accuracy = 10e10, -1
+progress_train_loss, progress_val_loss = [], []
+progress_train_acc, progress_val_acc, progress_val_balanced_acc = [], [], []
+best_loss, best_accuracy, best_balanced_accuracy = 10e10, -1, -1
 
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
@@ -72,7 +74,8 @@ for current_epoch in range(args.epochs):
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
 
-    val_loss, val_accuracy = torchy.utils.val_step(val_loader, model, criterion)
+    val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion, data_predicts=True)
+    val_balanced_accuracy = balanced_accuracy_score(val_truths, val_predicts)
 
     if val_loss > best_loss:
         torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_loss.pt")
@@ -82,21 +85,27 @@ for current_epoch in range(args.epochs):
         torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_accuracy.pt")
         best_accuracy = val_accuracy
 
+    if val_balanced_accuracy > best_balanced_accuracy:
+        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_balanced_accuracy.pt")
+        best_balanced_accuracy = val_balanced_accuracy
+
     # Imprimimos como va el entrenamiento
     current_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print("[{}] Epoch {}, LR: {:.6f}, Train Loss: {:.6f}, Val Loss: {:.6f}, Train Acc: {:.2f}, Val Acc: {:.2f}".format(
-        current_time, current_epoch + 1, torchy.utils.get_current_lr(optimizer), train_loss, val_loss, train_accuracy, val_accuracy
+    print("[{}] Epoch {}, LR: {:.6f}, Train Loss: {:.6f}, Val Loss: {:.6f}, Train Acc: {:.2f}, Val Acc: {:.2f}, Val Balanced Acc: {:.2f}".format(
+        current_time, current_epoch + 1, torchy.utils.get_current_lr(optimizer), train_loss, val_loss, train_accuracy, val_accuracy, val_balanced_accuracy
     ))
 
     progress_train_loss.append(train_loss)
     progress_val_loss.append(val_loss)
     progress_train_acc.append(train_accuracy)
     progress_val_acc.append(val_accuracy)
+    progress_val_balanced_acc.append(val_balanced_accuracy)
 
     torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_last.pt")
 
     progress = {"train_loss": progress_train_loss, "train_accuracy": progress_train_acc,
-                "val_loss": progress_val_loss, "val_accuracy": progress_val_acc}
+                "val_loss": progress_val_loss, "val_accuracy": progress_val_acc,
+                "val_balanced_accuracy":progress_val_balanced_acc}
     with open(args.output_dir + 'progress.pickle', 'wb') as handle:
         pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -104,5 +113,7 @@ for current_epoch in range(args.epochs):
 
 print("\n------------------------")
 print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
+                                                           np.array(progress_val_acc).argmax() + 1))
+print("Best Validation Balanced Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
                                                            np.array(progress_val_acc).argmax() + 1))
 print("------------------------\n")
