@@ -60,7 +60,9 @@ and start that image, assembling the data and the repository in the home.
 ### ToTest Techniques
 
 Some techniques that we are using or should be used, as a reminder, are:
-- [ ] Good Data Sampler
+- [x] Data normalization (255)
+- [x] Good Data Sampler
+- [ ] Balanced Multiclass Accuracy (If main Metric)
 - [ ] AUC Cost Function (If AUC as main Metric)
 - [ ] Special Data Augmentation 
 - [ ] More data? [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)
@@ -109,8 +111,12 @@ Some techniques that we are using or should be used, as a reminder, are:
 |  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 |                     |
 
 
-Sonclusions: the optimizer that has worked best has generally been SGD, 
-so we will choose this for the following phases.
+Conclusions: the optimizer that has worked best has generally been SGD, 
+so we will choose this for the following phases. 
+In addition, for the models that have been trained in this phase **we have 
+forgotten to normalize** the images... corrected for next phases!
+
+
 
 ### Reminders
 - Confusion Matrix

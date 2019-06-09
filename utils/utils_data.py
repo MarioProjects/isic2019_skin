@@ -56,9 +56,35 @@ def get_sampler_weights():
         sampler_weights = pickle.load(fp)
     return sampler_weights
 
+
+def normalize_data(feats, norm):
+    if norm == '0_1range':
+        max_val = feats.max()
+        min_val = feats.min()
+        feats = feats - min_val
+        feats = feats / (max_val - min_val)
+
+
+    elif norm == '-1_1range' or norm == 'np_range':
+        max_val = feats.max()
+        min_val = feats.min()
+        feats = feats * 2
+        feats = feats - (max_val - min_val)
+        feats = feats / (max_val - min_val)
+
+    elif norm == '255':
+        feats = feats / 255
+
+    elif norm == None or norm == "":
+        pass
+    else:
+        assert False, "Data normalization not implemented: {}".format(norm)
+
+    return feats
+
 class ISIC2019_FromFolders(data.Dataset):
 
-    def __init__(self, data_partition="", transforms=None, albumentation=None):
+    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255"):
         """
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
@@ -75,6 +101,7 @@ class ISIC2019_FromFolders(data.Dataset):
         self.data_partition = data_partition
         self.albumentation = albumentation
         self.transform = transforms
+        self.normalize = normalize
 
     def __len__(self):
         return len(self.imgs)
@@ -98,6 +125,7 @@ class ISIC2019_FromFolders(data.Dataset):
             except:
                 assert False, "Transform error in file: " + img_path
 
+        image = normalize_data(image, self.normalize)
         image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
