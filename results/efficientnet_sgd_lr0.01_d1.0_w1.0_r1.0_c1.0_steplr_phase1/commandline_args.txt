@@ -1,0 +1,18 @@
+{
+  "crop_size": 224,
+  "path_extension": "steplr_phase1",
+  "output_dir": "results/efficientnet_sgd_lr0.01_d1.0_w1.0_r1.0_c1.0_steplr_phase1/",
+  "compound_coefficient": 1.0,
+  "balanced_sampler": "",
+  "width_coefficient": 1.0,
+  "learning_rate": 0.01,
+  "img_size": 256,
+  "depth_coefficient": 1.0,
+  "epochs": 300,
+  "resolution_coefficient": 1.0,
+  "batch_size": 32,
+  "verbose": false,
+  "model_name": "efficientnet",
+  "data_augmentation": false,
+  "optimizer": "sgd"
+}
