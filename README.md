@@ -101,7 +101,7 @@ Some techniques that we are using or should be used, as a reminder, are:
 |  ~~SGD Momentum~~ |      ~~Constant LR (Finder) 1~~      |  ------------------  |   ~~Discarded~~ |
 |  ~~SGD Momentum~~ |   ~~Constant LR (Finder-1exp) 0.1~~  |  ------------------  |   ~~Discarded~~ |
 |  SGD Momentum     |   Constant LR (Expertise) 0.01       |  ------------------  |      0.747039   |
-|  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |   Running gpu21 |
+|  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |      0.799473   |
 |  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.785996   |
 |  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.786260   |
 |  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 | 
