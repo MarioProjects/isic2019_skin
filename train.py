@@ -80,10 +80,13 @@ if args.balanced_sampler:
     sampler = torch.utils.data.sampler.WeightedRandomSampler(sampler_weights, len(sampler_weights))
     train_loader = DataLoader(train_dataset, pin_memory=True, shuffle=False, sampler=sampler, batch_size=args.batch_size)
 else:
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=True, drop_last=True)
 
-
-val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug)
+val_transforms = transforms.Compose([
+    transforms.ToPILImage(),
+    transforms.ToTensor(),
+])
+val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug, transforms=val_transforms)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 print("Data loaded!\n")
 

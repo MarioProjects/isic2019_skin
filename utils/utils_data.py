@@ -127,6 +127,7 @@ class ISIC2019_FromFolders(data.Dataset):
 
         #print(image.max())
         #image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
+        #print(image.shape)
         #image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
