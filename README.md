@@ -108,7 +108,7 @@ Some techniques that we are using or should be used, as a reminder, are:
 |  SGD Momentum     |      Step LR (Expertise) 0.01        |  ------------------  |      0.7994     |       0.6897        |
 |  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.7859     |                     |
 |  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.7862     |                     |
-|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |   Running gpu11 |                     |
+|  SGD Default      |        Step LR (Finder) 1            | Balanced Dataloader  |      0.7750     |       0.5862        |
 
 
 Conclusions: the optimizer that has worked best has generally been SGD, 
