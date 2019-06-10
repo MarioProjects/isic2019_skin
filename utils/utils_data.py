@@ -115,9 +115,6 @@ class ISIC2019_FromFolders(data.Dataset):
             assert False, "Error in file: {}".format(img_path)
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
 
-        if self.transform:
-            image = self.transform(image)
-
         if self.albumentation:
             try:
                 augmented = self.albumentation(image=image)
@@ -125,8 +122,12 @@ class ISIC2019_FromFolders(data.Dataset):
             except:
                 assert False, "Transform error in file: " + img_path
 
-        image = normalize_data(image, self.normalize)
-        image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
+        if self.transform:
+            image = self.transform(image)
+
+        #print(image.max())
+        #image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
+        #image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
 

@@ -11,7 +11,27 @@ from sklearn.metrics import balanced_accuracy_score
 import albumentations
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from torchvision.transforms import transforms
 import torchy
+
+from utils.archive import arsaug_policy, autoaug_policy, autoaug_paper_cifar10, random_search2048, \
+    fa_reduced_imagenet, fa_reduced_cifar10
+
+from utils.augmentations import *
+
+class Augmentation(object):
+    def __init__(self, policies):
+        self.policies = policies
+
+    def __call__(self, img):
+        for _ in range(1):
+            policy = random.choice(self.policies)
+            for name, pr, level in policy:
+                if random.random() > pr:
+                    continue
+                img = apply_augment(img, name, level)
+        return img
+
 
 # ---- My utils ----
 from utils.train_arguments import *
@@ -34,10 +54,25 @@ val_aug = albumentations.Compose([
     albumentations.CenterCrop(p=1, height=args.crop_size, width=args.crop_size)
 ])
 
+train_transforms = None
 if args.data_augmentation:
-    print("Data Augmentation to be implemented...")
+    train_aug = albumentations.Compose([
+        albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
+        albumentations.Resize(args.img_size, args.img_size),
+        albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size)
+    ])
 
-train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug)
+    train_transforms = transforms.Compose([
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+    ])
+
+    # fa_reduced_cifar10() - autoaug_paper_cifar10() - fa_reduced_imagenet()
+    train_transforms.transforms.insert(0, Augmentation(autoaug_paper_cifar10()))
+    train_transforms.transforms.insert(0, transforms.ToPILImage())
+
+
+train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug, transforms=train_transforms)
 
 if args.balanced_sampler:
     sampler_weights = get_sampler_weights()
