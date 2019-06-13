@@ -152,6 +152,6 @@ for current_epoch in range(args.epochs):
 print("\n------------------------")
 print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
                                                            np.array(progress_val_acc).argmax() + 1))
-print("Best Validation Balanced Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
-                                                           np.array(progress_val_acc).argmax() + 1))
+print("Best Validation Balanced Accuracy {:.4f} at epoch {}".format(np.array(progress_val_balanced_acc).max(),
+                                                           np.array(progress_val_balanced_acc).argmax() + 1))
 print("------------------------\n")
