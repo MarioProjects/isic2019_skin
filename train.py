@@ -59,17 +59,21 @@ if args.data_augmentation:
     train_aug = albumentations.Compose([
         albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
         albumentations.Resize(args.img_size, args.img_size),
-        albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size)
+        albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size),
+        albumentations.VerticalFlip(p=0.5),
+        albumentations.HorizontalFlip(p=0.5),
+        albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.22, contrast_limit=0.22),
+        albumentations.HueSaturationValue(p=0.5, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
+        albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45)
     ])
 
-    train_transforms = transforms.Compose([
-        transforms.RandomHorizontalFlip(),
-        transforms.ToTensor(),
-    ])
+    #train_transforms = transforms.Compose([
+    #    transforms.ToTensor(),
+    #])
 
     # fa_reduced_cifar10() - autoaug_paper_cifar10() - fa_reduced_imagenet()
-    train_transforms.transforms.insert(0, Augmentation(autoaug_paper_cifar10()))
-    train_transforms.transforms.insert(0, transforms.ToPILImage())
+    #train_transforms.transforms.insert(0, Augmentation(autoaug_paper_cifar10()))
+    #train_transforms.transforms.insert(0, transforms.ToPILImage())
 
 
 train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug, transforms=train_transforms)

@@ -7,6 +7,8 @@ from skimage import io
 from torch.utils import data
 import torchy
 import pickle
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 ISIC_PATH = "/home/maparla/DeepLearning/Datasets/ISIC2019/"
 ISIC_TRAIN_ROOT_PATH = ISIC_PATH + "ISIC_2019_Training_Input"
@@ -84,7 +86,7 @@ def normalize_data(feats, norm):
 
 class ISIC2019_FromFolders(data.Dataset):
 
-    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255"):
+    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255", seed=42):
         """
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
@@ -97,6 +99,9 @@ class ISIC2019_FromFolders(data.Dataset):
             self.imgs = TRAIN_IMGS
         elif data_partition == "validation":
             self.imgs = VALIDATION_IMGS
+
+        #random.seed(seed)
+        #random.shuffle(self.imgs)
 
         self.data_partition = data_partition
         self.albumentation = albumentation
@@ -124,11 +129,9 @@ class ISIC2019_FromFolders(data.Dataset):
 
         if self.transform:
             image = self.transform(image)
-
-        #print(image.max())
-        #image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
-        #print(image.shape)
-        #image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
+        else: # If there are not Pytorch transformations, principally ToTensor(), we have to modify manually the data
+            image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
+            image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
 
@@ -191,3 +194,36 @@ class ISIC2019_Dataset(data.Dataset):
 
         image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
+
+
+def save_imgs(images, targets=None, display=False, save=True, custom_name="", num_test_samples=16, imgs_out_dir=""):
+    fig=plt.figure(figsize = (7,7))
+    gs1 = gridspec.GridSpec(4, 4)
+    if targets is None:
+        gs1.update(wspace=0.025, hspace=0.05) # set the spacing between axes.
+    else:
+        gs1.update(wspace=0.025, hspace=0.275) # set the spacing between axes.
+
+    for i in range(num_test_samples):
+        # i = i + 1 # grid spec indexes from 0
+        ax1 = plt.subplot(gs1[i])
+        plt.axis('off')
+        ax1.set_xticklabels([])
+        ax1.set_yticklabels([])
+        ax1.set_aspect('equal')
+        if targets is not None:
+            ax1.set_title(CLASS_CATEGORIES[targets[i].item()])
+
+        if(images[i].shape[0]==1):
+            img = images[i].reshape(images[i].shape[1], images[i].shape[2])
+        elif(images[i].shape[0]==3):
+            img = images[i].permute(1,2,0)
+        else: assert False, "Check images dims!"
+        plt.imshow(img)
+
+    if display: plt.show()
+    if save:
+        if custom_name!="":
+            fig.savefig(imgs_out_dir+custom_name+'.png', bbox_inches='tight')
+        else: assert False, "Provide a name please!"
+    plt.close()
