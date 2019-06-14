@@ -113,7 +113,7 @@ Some techniques that we are using or should be used, as a reminder, are:
 |  SGD Default      |      Constant LR (Finder) 1          |  ------------------  |      0.7859     |                     |
 |  SGD Default      |        Step LR (Finder) 1            |  ------------------  |      0.7862     |                     |
 |  SGD Default      |        Step LR (Finder) 1            |         BB           |      0.7750     |       0.5862        |
-|  **SGD Default**  |      **Step LR (Finder) 1**          | **BB / Normalized**  |    **0.8084**   |       0.7000**      |
+|  **SGD Default**  |      **Step LR (Finder) 1**          | **BB / Normalized**  |    **0.8084**   |     **0.7000**      |
 
 - BB: Batch Balanced
 - Normalized: Normalize input images / 255
