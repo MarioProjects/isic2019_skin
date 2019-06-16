@@ -8,7 +8,7 @@ epochs=300
 batch_size=32
 optimizer="sgd"
 lr=0.01 # learning_rate
-path_extension="steplr_phase2_CustomDA"
+path_extension="steplr_phase3_CustomDA_CoefficientSearch"
 model_path="results/"$model"_"$optimizer"_lr"$lr"_d"$depth_coefficient"_w"$width_coefficient"_r"$resolution_coefficient"_c"$compound_coefficient
 
 python3 -u train.py --optimizer $optimizer --model_name $model --learning_rate $lr --epochs $epochs \
