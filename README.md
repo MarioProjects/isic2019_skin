@@ -81,6 +81,7 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [x] RMSprop Default
 
 - [ ] PHASE 2 - Data Augmentation
+  + [ ] Custom Data Augmentation (based on previous papers)
   + [ ] [Fast Autoaugment (transfer?)](https://arxiv.org/abs/1905.00397)
 
 - [ ] PHASE 3 - [EfficientNet Explotation](https://arxiv.org/pdf/1905.11946.pdf) 
@@ -124,7 +125,26 @@ In addition, for the models that have been trained in this phase **we have
 forgotten to normalize** (Normalize) the images... corrected for next phases!
 **Balanced sampler has no clear impact** on results...
 
+#### PHASE 2 . Data Augmentation
 
+|     Optimizer     |            LR Planning               |   Additional Info    |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:--------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ------------------  |      0.8226     |       0.7320        |
+
+In this experiments all images are normalized dividing the data by 255. Custom Data Augmentation employed:
+
+```python
+train_aug = albumentations.Compose([
+    albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
+    albumentations.Resize(args.img_size, args.img_size),
+    albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size),
+    albumentations.VerticalFlip(p=0.5),
+    albumentations.HorizontalFlip(p=0.5),
+    albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.22, contrast_limit=0.22),
+    albumentations.HueSaturationValue(p=0.5, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
+    albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45)
+])
+```
 
 ### Reminders
 - Confusion Matrix
