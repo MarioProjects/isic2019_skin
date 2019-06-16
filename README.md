@@ -130,10 +130,12 @@ forgotten to normalize** (Normalize) the images... corrected for next phases!
 |     Optimizer     |            LR Planning               |   Additional Info    |     Accuracy    |  Balanced Accuracy  |
 |:-----------------:|:------------------------------------:|:--------------------:|:---------------:|:-------------------:|
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |  ------------------  |      0.8226     |       0.7320        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |       Aggro DA       |      0.8244     |       0.7306        |
 
 In this experiments all images are normalized dividing the data by 255. Custom Data Augmentation employed:
 
 ```python
+# Custom Data Augmentation
 train_aug = albumentations.Compose([
     albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
     albumentations.Resize(args.img_size, args.img_size),
@@ -143,6 +145,18 @@ train_aug = albumentations.Compose([
     albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.22, contrast_limit=0.22),
     albumentations.HueSaturationValue(p=0.5, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
     albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45)
+])
+
+# Custom Aggro Data Augmentation
+train_aug = albumentations.Compose([
+    albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),
+    albumentations.Resize(args.img_size, args.img_size),
+    albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size),
+    albumentations.VerticalFlip(p=0.5),
+    albumentations.HorizontalFlip(p=0.5),
+    albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.25, contrast_limit=0.25),
+    albumentations.HueSaturationValue(p=0.5, hue_shift_limit=9, sat_shift_limit=14, val_shift_limit=10),
+    albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.2, scale_limit=0.2, rotate_limit=75)
 ])
 ```
 
