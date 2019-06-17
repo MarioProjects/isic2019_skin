@@ -62,11 +62,8 @@ and start that image, assembling the data and the repository in the home.
 Some techniques that we are using or should be used, as a reminder, are:
 - [x] Data normalization (255)
 - [x] Good Data Sampler
-- [ ] Balanced Multiclass Accuracy (If main Metric)
-- [ ] AUC Cost Function (If AUC as main Metric)
-- [ ] Special Data Augmentation 
 - [ ] More data? [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)
-- [ ] [Balanced accuracy score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html)
+- [x] [Balanced accuracy score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html)
 - [ ] [Focal Loss](https://www.dlology.com/blog/multi-class-classification-with-focal-loss-for-imbalanced-datasets/)
 
 ### Testing Phases
@@ -81,7 +78,7 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [x] RMSprop Default
 
 - [ ] PHASE 2 - Data Augmentation
-  + [ ] Custom Data Augmentation (based on previous papers)
+  + [x] Custom Data Augmentation (based on previous papers)
   + [ ] [Fast Autoaugment (transfer?)](https://arxiv.org/abs/1905.00397)
 
 - [ ] PHASE 3 - [EfficientNet Explotation](https://arxiv.org/pdf/1905.11946.pdf) 
@@ -93,7 +90,9 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [ ] [Pair Sampling](https://arxiv.org/pdf/1801.02929.pdf)
   + [ ] [Snapshot Ensembling](https://arxiv.org/abs/1704.00109)
   + [ ] Test Time Augmentations
-  + [ ] Calibration Methods  
+  + [ ] Calibration Methods
+  + [ ] [Color Constancy - Shades of gray](http://vislab.isr.ist.utl.pt/wp-content/uploads/2012/12/14-ICIPa.pdf)
+  + [ ] Error analysis
   
 
 ### Results
@@ -159,6 +158,8 @@ train_aug = albumentations.Compose([
     albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.2, scale_limit=0.2, rotate_limit=75)
 ])
 ```
+
+#### PHASE 3.1 . EfficientNet - Coefficients Search
 
 ### Reminders
 - Confusion Matrix
