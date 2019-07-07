@@ -84,6 +84,7 @@ def normalize_data(feats, norm):
 
     return feats
 
+
 class ISIC2019_FromFolders(data.Dataset):
 
     def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255", seed=42):
@@ -134,66 +135,6 @@ class ISIC2019_FromFolders(data.Dataset):
             image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
         return image, target
 
-
-class ISIC2019_Dataset(data.Dataset):
-    ### -----------------------------------------------
-    ### DEPRECATED! -> USE INSTEAD ISIC2019_FromFolders
-    ### -----------------------------------------------
-    def __init__(self, data_partition="", transforms=None, albumentation=None, validation_size=0.15, seed=42):
-        """
-          - data_partition:
-             -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
-             -> Si es "train" devuelve 1-validation_size muestras de todo el TRAIN
-             -> Si es "validation" devuelve validation_size muestras de todo el TRAIN
-        """
-        self.root_path = ROOT_PATH[data_partition]
-        self.imgs = []
-        for dirpath, dirnames, files in os.walk(self.root_path):
-            for f in files:
-                if ".txt" not in f:
-                    img = os.path.join(dirpath, f)
-                    self.imgs.append(img)
-
-        self.imgs = np.array(self.imgs)
-
-        random.seed(seed)
-        val_images = random.sample(range(len(self.imgs)), int(validation_size * len(self.imgs)))
-
-        if data_partition == "train":
-            train_images = list(set(list(range(len(self.imgs)))) - set(val_images))
-            self.imgs = self.imgs[train_images]
-        elif data_partition == "validation":
-            self.imgs = self.imgs[val_images]
-
-        self.data_partition = data_partition
-        self.albumentation = albumentation
-        self.transform = transforms
-
-    def __len__(self):
-        return len(self.imgs)
-
-    def __getitem__(self, index):
-
-        img_path = self.imgs[index]
-        image = io.imread(img_path)
-
-        img_name = img_path.split("/")[-1]
-        img_name = img_name[:img_name.find(".jpg")]  # quitamos la extension del nombre
-
-        target = ISIC_TRAIN_DF_TRUTH.loc[ISIC_TRAIN_DF_TRUTH.image == img_name].target.values[0]
-
-        if self.transform:
-            image = self.transform(image)
-
-        if self.albumentation:
-            try:
-                augmented = self.albumentation(image=image)
-                image = augmented['image']
-            except:
-                assert False, "Transform error in file: " + img_name
-
-        image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
-        return image, target
 
 
 def save_imgs(images, targets=None, display=False, save=True, custom_name="", num_test_samples=16, imgs_out_dir=""):

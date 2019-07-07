@@ -55,6 +55,14 @@ val_aug = albumentations.Compose([
 ])
 
 train_transforms = None
+
+if args.pretrained_imagenet:
+    train_transforms = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+    ])
+
+
 if args.data_augmentation:
     train_aug = albumentations.Compose([
         albumentations.PadIfNeeded(p=1, min_height=args.crop_size, min_width=args.crop_size),

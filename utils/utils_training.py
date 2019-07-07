@@ -1,10 +1,16 @@
 import torch
+import torch.nn as nn
 import torchy
+from efficientnet_pytorch import EfficientNet
 
 
 def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coefficient=1.0):
     if model_name == "efficientnet":
         return torchy.models.EfficientNet_Constants(depth_coefficient, width_coefficient, num_classes=num_classes).cuda()
+    # https://github.com/lukemelas/EfficientNet-PyTorch#loading-pretrained-models
+    elif model_name == "efficientnet_pretrained_b5":
+        model = EfficientNet.from_pretrained('efficientnet-b5')
+        model._fc = nn.Linear(2048, num_classes)
     else:
         assert False, "Uknown model selected!"
 

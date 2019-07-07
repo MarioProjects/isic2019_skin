@@ -17,11 +17,12 @@ parser = argparse.ArgumentParser(
     formatter_class=SmartFormatter)
 
 parser.add_argument('--verbose', action='store_true', help='Verbose mode')
+parser.add_argument('--pretrained_imagenet', action='store_true', help='If you will use pretrained model on Imagenet (normalizations to data)')
 parser.add_argument('--epochs', type=int, default=200, help='Total number epochs for training')
 parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for training')
 
 parser.add_argument('--model_name', type=str, default='efficientnet',
-                    choices=['efficientnet'],  # ToDo: Add more?!
+                    choices=['efficientnet','efficientnet_pretrained_b5'],  # ToDo: Add more?!
                     help='Model name for training')
 parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
