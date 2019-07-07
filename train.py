@@ -104,7 +104,8 @@ print("Data loaded!\n")
 
 num_classes = len(np.unique(ISIC_TRAIN_DF_TRUTH.target))
 print("{} Classes detected!".format(num_classes))
-model = model_selector(args.model_name, num_classes, args.depth_coefficient, args.width_coefficient)
+start_freezed = True if args.freezed_epochs > 0 else False
+model = model_selector(args.model_name, num_classes, args.depth_coefficient, args.width_coefficient, freezed=start_freezed)
 model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count()))
 
 progress_train_loss, progress_val_loss = [], []
@@ -121,6 +122,10 @@ for argument in args.__dict__:
 # ---- START TRAINING ----
 print("\n---- Start Training ----")
 for current_epoch in range(args.epochs):
+
+    if args.pretrained_imagenet and args.freezed_epochs <= current_epoch:
+        for param in model.parameters():
+            param.requires_grad = True
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
 

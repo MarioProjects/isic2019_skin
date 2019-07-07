@@ -28,6 +28,8 @@ parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
 
+parser.add_argument('--freezed_epochs', type=int, default=100, help='Using pretrained models, number of model freezed epochs')
+
 parser.add_argument('--balanced_sampler', action='store_true', help='Use a balanced train dataloader')
 
 parser.add_argument('--depth_coefficient', type=float, default=1.0, help='[Efficientnet] Depth Coefficient')
