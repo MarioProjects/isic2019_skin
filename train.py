@@ -111,6 +111,7 @@ model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count())
 progress_train_loss, progress_val_loss = [], []
 progress_train_acc, progress_val_acc, progress_val_balanced_acc = [], [], []
 best_loss, best_accuracy, best_balanced_accuracy = 10e10, -1, -1
+alert_unfreeze = True
 
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
@@ -123,9 +124,11 @@ for argument in args.__dict__:
 print("\n---- Start Training ----")
 for current_epoch in range(args.epochs):
 
-    if args.pretrained_imagenet and args.freezed_epochs <= current_epoch:
+    if alert_unfreeze and args.pretrained_imagenet and current_epoch >= args.freezed_epochs:
+        print("\n------- UNFREEZE MODEL -------\n")
         for param in model.parameters():
             param.requires_grad = True
+        alert_unfreeze = False
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
 

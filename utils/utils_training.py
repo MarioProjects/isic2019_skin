@@ -8,13 +8,20 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
     if model_name == "efficientnet":
         return torchy.models.EfficientNet_Constants(depth_coefficient, width_coefficient, num_classes=num_classes).cuda()
     # https://github.com/lukemelas/EfficientNet-PyTorch#loading-pretrained-models
+    elif model_name == "efficientnet_pretrained_b4":
+        model = EfficientNet.from_pretrained('efficientnet-b4')
+        if freezed:
+            for param in model.parameters():
+                param.requires_grad = False
+        model._fc = nn.Linear(1792, num_classes)
+        return model.cuda()
     elif model_name == "efficientnet_pretrained_b5":
         model = EfficientNet.from_pretrained('efficientnet-b5')
         if freezed:
             for param in model.parameters():
                 param.requires_grad = False
         model._fc = nn.Linear(2048, num_classes)
-        return model
+        return model.cuda()
     else:
         assert False, "Uknown model selected!"
 
