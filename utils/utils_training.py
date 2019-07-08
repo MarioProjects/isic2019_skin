@@ -35,3 +35,12 @@ def get_optimizer(optmizer_type, model, lr=0.1):
         return torch.optim.RMSprop(model.parameters(), lr=lr, weight_decay=1e-5, momentum=0.9)
 
     assert False, 'No optimizers with that name! [' + optmizer_type + ']'
+
+
+def check_unfreeze(alert_unfreeze, pretrained_imagenet, current_epoch, freezed_epochs, model):
+    if alert_unfreeze and pretrained_imagenet and current_epoch >= freezed_epochs:
+        print("\n------- UNFREEZE MODEL -------\n")
+        for param in model.parameters():
+            param.requires_grad = True
+        return False # Model unfreezed
+    return True # Model Not unfreezed

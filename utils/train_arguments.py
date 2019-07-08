@@ -29,6 +29,7 @@ parser.add_argument('--optimizer', type=str, default='adam',
                     help='Optimizer for training')
 
 parser.add_argument('--freezed_epochs', type=int, default=100, help='Using pretrained models, number of model freezed epochs')
+parser.add_argument('--snapshot', type=int, default=1, help='Numer of snapshot for cyclic learning schedule')
 
 parser.add_argument('--balanced_sampler', action='store_true', help='Use a balanced train dataloader')
 
