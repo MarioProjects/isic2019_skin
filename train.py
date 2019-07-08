@@ -72,7 +72,8 @@ if args.data_augmentation:
         albumentations.HorizontalFlip(p=0.5),
         albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.22, contrast_limit=0.22),
         albumentations.HueSaturationValue(p=0.5, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
-        albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45)
+        albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45),
+        albumentations.Cutout(p=0.5, num_holes=1, max_h_size=50, max_w_size=50)
     ])
 
     #train_transforms = transforms.Compose([
