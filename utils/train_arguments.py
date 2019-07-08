@@ -22,7 +22,7 @@ parser.add_argument('--epochs', type=int, default=200, help='Total number epochs
 parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for training')
 
 parser.add_argument('--model_name', type=str, default='efficientnet',
-                    choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5"],  # ToDo: Add more?!
+                    choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5", "resnet34", "resnet50"],  # ToDo: Add more?!
                     help='Model name for training')
 parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],

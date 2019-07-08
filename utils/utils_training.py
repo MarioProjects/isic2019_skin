@@ -22,6 +22,10 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
                 param.requires_grad = False
         model._fc = nn.Linear(2048, num_classes)
         return model.cuda()
+    elif model_name == "resnet34":
+        return torchy.models.ResNet(torchy.models.resnet.BasicBlock, [3, 4, 6, 3], num_classes=num_classes).cuda()
+    elif model_name == "resnet50":
+        return torchy.models.ResNet(torchy.models.resnet.Bottleneck, [3, 4, 6, 3], num_classes=num_classes).cuda()
     else:
         assert False, "Uknown model selected!"
 
