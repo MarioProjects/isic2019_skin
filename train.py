@@ -119,6 +119,7 @@ optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
 
 if args.snapshot > 1:
     scheduler_step = args.epochs // args.snapshot
+    print("Generating Snaps every {} epochs!".format(scheduler_step))
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
     num_snapshot = 0
 else:
@@ -172,6 +173,7 @@ for current_epoch in range(args.epochs):
     with open(args.output_dir + 'progress.pickle', 'wb') as handle:
         pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+    scheduler.step()
     if args.snapshot > 1:
         if (current_epoch + 1) % scheduler_step == 0:
             print(" \n ------------------- SAVING SNAP: {} ------------------- ".format(num_snapshot))
@@ -182,8 +184,6 @@ for current_epoch in range(args.epochs):
             scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
             num_snapshot += 1
             best_accuracy, best_balanced_accuracy = -1, -1
-    else:
-        scheduler.step()
 
 print("\n------------------------")
 print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),
