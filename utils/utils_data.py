@@ -115,18 +115,12 @@ class ISIC2019_FromFolders(data.Dataset):
     def __getitem__(self, index):
 
         img_path = self.imgs[index]
-        try:
-            image = io.imread(img_path)
-        except:
-            assert False, "Error in file: {}".format(img_path)
+        image = io.imread(img_path)
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
 
         if self.albumentation:
-            try:
-                augmented = self.albumentation(image=image)
-                image = augmented['image']
-            except:
-                assert False, "Transform error in file: " + img_path
+            augmented = self.albumentation(image=image)
+            image = augmented['image']
 
         if self.transform:
             image = self.transform(image)

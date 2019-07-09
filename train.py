@@ -123,7 +123,7 @@ if args.snapshot > 1:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
     num_snapshot = 0
 else:
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.15)
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1)
 
 for argument in args.__dict__:
     print("{}: {}".format(argument, args.__dict__[argument]))
@@ -132,7 +132,7 @@ for argument in args.__dict__:
 print("\n---- Start Training ----")
 for current_epoch in range(args.epochs):
 
-    alert_unfreeze = check_unfreeze(alert_unfreeze, args.pretrained_imagenet, current_epoch, args.freezed_epochs, model)
+    alert_unfreeze = check_unfreeze(alert_unfreeze, args.pretrained_imagenet, current_epoch, args.freezed_epochs, model, args.output_dir, args.model_name)
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
 
