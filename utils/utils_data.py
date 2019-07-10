@@ -9,6 +9,7 @@ import torchy
 import pickle
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+import utils.color_constancy as color_constancy
 
 ISIC_PATH = "/home/maparla/DeepLearning/Datasets/ISIC2019/"
 ISIC_TRAIN_ROOT_PATH = ISIC_PATH + "ISIC_2019_Training_Input"
@@ -87,7 +88,7 @@ def normalize_data(feats, norm):
 
 class ISIC2019_FromFolders(data.Dataset):
 
-    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255", seed=42):
+    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255", seed=42, retinex=False, shade_of_gray=False):
         """
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
@@ -108,6 +109,8 @@ class ISIC2019_FromFolders(data.Dataset):
         self.albumentation = albumentation
         self.transform = transforms
         self.normalize = normalize
+        self.retinex = retinex
+        self.shade_of_gray = shade_of_gray
 
     def __len__(self):
         return len(self.imgs)
@@ -117,6 +120,11 @@ class ISIC2019_FromFolders(data.Dataset):
         img_path = self.imgs[index]
         image = io.imread(img_path)
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
+
+        if self.retinex:
+            image = color_constancy.white_patch_retinex(image, 1)
+        elif self.shade_of_gray:
+            image = color_constancy.shade_of_gray(image, power=2.2)
 
         if self.albumentation:
             augmented = self.albumentation(image=image)
