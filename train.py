@@ -111,12 +111,19 @@ model = torch.nn.DataParallel(model, device_ids=range(torch.cuda.device_count())
 
 progress_train_loss, progress_val_loss = [], []
 progress_train_acc, progress_val_acc, progress_val_balanced_acc = [], [], []
-best_loss, best_accuracy, best_balanced_accuracy = 10e10, -1, -1
+best_loss, best_accuracy, best_balanced_accuracy, global_best_accuracy, global_best_balanced_accuracy = 10e10, -1, -1, -1, -1
 alert_unfreeze = True
 
 criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
-scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.15)
+
+if args.snapshot > 1:
+    scheduler_step = args.epochs // args.snapshot
+    print("Generating Snaps every {} epochs!".format(scheduler_step))
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
+    num_snapshot = 0
+else:
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1)
 
 for argument in args.__dict__:
     print("{}: {}".format(argument, args.__dict__[argument]))
@@ -125,28 +132,26 @@ for argument in args.__dict__:
 print("\n---- Start Training ----")
 for current_epoch in range(args.epochs):
 
-    if alert_unfreeze and args.pretrained_imagenet and current_epoch >= args.freezed_epochs:
-        print("\n------- UNFREEZE MODEL -------\n")
-        for param in model.parameters():
-            param.requires_grad = True
-        alert_unfreeze = False
+    alert_unfreeze = check_unfreeze(alert_unfreeze, args.pretrained_imagenet, current_epoch, args.freezed_epochs, model, args.output_dir, args.model_name)
 
     train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
 
     val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion, data_predicts=True)
     val_balanced_accuracy = balanced_accuracy_score(val_truths, val_predicts)
 
-    if val_loss > best_loss:
-        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_loss.pt")
-        best_loss = val_loss
-
     if val_accuracy > best_accuracy:
-        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_accuracy.pt")
         best_accuracy = val_accuracy
+        best_accuracy_model = model.state_dict()
+        if best_accuracy >= global_best_accuracy:
+            global_best_accuracy = best_accuracy
+            torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_GLOBAL_best_accuracy.pt")
 
     if val_balanced_accuracy > best_balanced_accuracy:
-        torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_best_balanced_accuracy.pt")
         best_balanced_accuracy = val_balanced_accuracy
+        best_balanced_accuracy_model = model.state_dict()
+        if best_balanced_accuracy >= global_best_balanced_accuracy:
+            global_best_balanced_accuracy = best_balanced_accuracy
+            torch.save(model.state_dict(), args.output_dir + "model_" + args.model_name + "_GLOBAL_best_balanced_accuracy.pt")
 
     # Imprimimos como va el entrenamiento
     current_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -169,6 +174,16 @@ for current_epoch in range(args.epochs):
         pickle.dump(progress, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     scheduler.step()
+    if args.snapshot > 1:
+        if (current_epoch + 1) % scheduler_step == 0:
+            print(" \n ------------------- SAVING SNAP: {} ------------------- ".format(num_snapshot))
+            print("Val Acc: {:.4f}, Val Balanced Acc: {:.4f}\n".format(best_accuracy, best_balanced_accuracy))
+            torch.save(best_accuracy_model,args.output_dir+"model_"+args.model_name+"_best_accuracy_snap"+str(num_snapshot)+".pt")
+            torch.save(best_balanced_accuracy_model,args.output_dir+"model_"+args.model_name+"_best_balanced_accuracy_snap"+str(num_snapshot)+".pt")
+            optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
+            scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
+            num_snapshot += 1
+            best_accuracy, best_balanced_accuracy = -1, -1
 
 print("\n------------------------")
 print("Best Validation Accuracy {:.4f} at epoch {}".format(np.array(progress_val_acc).max(),

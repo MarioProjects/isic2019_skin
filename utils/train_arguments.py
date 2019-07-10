@@ -22,13 +22,15 @@ parser.add_argument('--epochs', type=int, default=200, help='Total number epochs
 parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for training')
 
 parser.add_argument('--model_name', type=str, default='efficientnet',
-                    choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5"],  # ToDo: Add more?!
+                    choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5",
+                             "se_resnext101_32x4d_pretrained", "resnet34", "resnet50"],  # ToDo: Add more?!
                     help='Model name for training')
 parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
 
 parser.add_argument('--freezed_epochs', type=int, default=100, help='Using pretrained models, number of model freezed epochs')
+parser.add_argument('--snapshot', type=int, default=1, help='Numer of snapshot for cyclic learning schedule')
 
 parser.add_argument('--balanced_sampler', action='store_true', help='Use a balanced train dataloader')
 
