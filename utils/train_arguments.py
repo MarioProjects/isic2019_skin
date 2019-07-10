@@ -21,6 +21,9 @@ parser.add_argument('--pretrained_imagenet', action='store_true', help='If you w
 parser.add_argument('--epochs', type=int, default=200, help='Total number epochs for training')
 parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for training')
 
+parser.add_argument('--retinex', action='store_true', help='Apply retinex on data')
+parser.add_argument('--shade_of_gray', action='store_true', help='Apply shade of gray on data')
+
 parser.add_argument('--model_name', type=str, default='efficientnet',
                     choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5",
                              "se_resnext101_32x4d_pretrained", "resnet34", "resnet50"],  # ToDo: Add more?!

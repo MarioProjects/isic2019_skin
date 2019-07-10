@@ -85,7 +85,8 @@ if args.data_augmentation:
     #train_transforms.transforms.insert(0, transforms.ToPILImage())
 
 
-train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug, transforms=train_transforms)
+train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug, transforms=train_transforms,
+                                     retinex=args.retinex, shade_of_gray=args.shade_of_gray)
 
 if args.balanced_sampler:
     sampler_weights = get_sampler_weights()
@@ -99,7 +100,8 @@ val_transforms = transforms.Compose([
     transforms.ToPILImage(),
     transforms.ToTensor(),
 ])
-val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug, transforms=val_transforms)
+val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug, transforms=val_transforms,
+                                   retinex=args.retinex, shade_of_gray=args.shade_of_gray)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 print("Data loaded!\n")
 
