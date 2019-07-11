@@ -13,7 +13,7 @@ batch_size=32 # efficientnet -> 32 / efficientnet_pretrained_b4 -> 16
 optimizer="sgd"
 snapshot=1
 lr=0.01 # learning_rate
-path_extension="steplr_phase2_"
+path_extension="steplr_phase2_ShadeOfGray"
 model_path="results/"$model"_"$optimizer"_lr"$lr"_d"$depth_coefficient"_w"$width_coefficient"_r"$resolution_coefficient"_c"$compound_coefficient
 
 # --pretrained_imagenet / --retinex / --shade_of_gray

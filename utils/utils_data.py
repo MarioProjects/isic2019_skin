@@ -75,8 +75,8 @@ def normalize_data(feats, norm):
         feats = feats - (max_val - min_val)
         feats = feats / (max_val - min_val)
 
-    elif norm == '255':
-        feats = feats / 255
+    elif type(norm) is int:
+        feats = feats / norm
 
     elif norm == None or norm == "":
         pass
@@ -88,7 +88,7 @@ def normalize_data(feats, norm):
 
 class ISIC2019_FromFolders(data.Dataset):
 
-    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize="255", seed=42, retinex=False, shade_of_gray=False):
+    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize=255, seed=42, retinex=False, shade_of_gray=False):
         """
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
@@ -118,13 +118,13 @@ class ISIC2019_FromFolders(data.Dataset):
     def __getitem__(self, index):
 
         img_path = self.imgs[index]
+        if self.retinex:
+            img_path = img_path.replace("Train", "retinex_train")
+        elif self.shade_of_gray:
+            img_path = img_path.replace("Train", "shade_of_gray_train")
+
         image = io.imread(img_path)
         target = CATEGORIES_CLASS[img_path.split("/")[-2]]
-
-        if self.retinex:
-            image = color_constancy.white_patch_retinex(image, 1)
-        elif self.shade_of_gray:
-            image = color_constancy.shade_of_gray(image, power=2.2)
 
         if self.albumentation:
             augmented = self.albumentation(image=image)

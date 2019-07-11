@@ -1,7 +1,6 @@
-import numpy as np
 import cv2
-import os
-from matplotlib import pyplot as plt
+import numpy as np
+
 
 def gray_world(img):
     """
@@ -12,10 +11,12 @@ def gray_world(img):
     """
     img = img.astype(np.float)
     pixels_num = img.shape[0] * img.shape[1]
-    bgr_avg = np.sum(np.sum(img, axis = 0), axis = 0) / pixels_num
+    bgr_avg = np.sum(np.sum(img, axis=0), axis=0) / pixels_num
     gray_avg = np.sum(bgr_avg) / img.shape[2]
     bgr_k = gray_avg / bgr_avg
     return img * np.transpose(bgr_k)
+
+
 def white_patch_retinex(img, para):
     """
     Parameters
@@ -46,6 +47,8 @@ def white_patch_retinex(img, para):
                     out[:, :, i] = img[:, :, i] * 255.0 / L[i]
                     break
     return out
+
+
 def shade_of_gray(img, power=6, gamma=None):
     """
     Parameters
@@ -61,20 +64,22 @@ def shade_of_gray(img, power=6, gamma=None):
 
     if gamma is not None:
         img = img.astype('uint8')
-        look_up_table = np.ones((256,1), dtype='uint8') * 0
-        for i in xrange(256):
-            look_up_table[i][0] = 255 * pow(i/255, 1/gamma)
+        look_up_table = np.ones((256, 1), dtype='uint8') * 0
+        for i in range(256):
+            look_up_table[i][0] = 255 * pow(i / 255, 1 / gamma)
         img = cv2.LUT(img, look_up_table)
 
     img = img.astype('float32')
     img_power = np.power(img, power)
-    rgb_vec = np.power(np.mean(img_power, (0,1)), 1/power)
+    rgb_vec = np.power(np.mean(img_power, (0, 1)), 1 / power)
     rgb_norm = np.sqrt(np.sum(np.power(rgb_vec, 2.0)))
-    rgb_vec = rgb_vec/rgb_norm
-    rgb_vec = 1/(rgb_vec*np.sqrt(3))
+    rgb_vec = rgb_vec / rgb_norm
+    rgb_vec = 1 / (rgb_vec * np.sqrt(3))
     img = np.multiply(img, rgb_vec)
 
     return img.astype(img_dtype)
+
+
 def general_gray_world(img, power=2, sigma=3):
     """
     Parameters
