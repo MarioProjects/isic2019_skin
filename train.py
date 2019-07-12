@@ -86,7 +86,7 @@ if args.data_augmentation:
 
 
 train_dataset = ISIC2019_FromFolders(data_partition="train", albumentation=train_aug, transforms=train_transforms,
-                                     retinex=args.retinex, shade_of_gray=args.shade_of_gray)
+                                     retinex=args.retinex, shade_of_gray=args.shade_of_gray, colornet=args.colornet)
 
 if args.balanced_sampler:
     sampler_weights = get_sampler_weights()
@@ -101,7 +101,7 @@ val_transforms = transforms.Compose([
     transforms.ToTensor(),
 ])
 val_dataset = ISIC2019_FromFolders(data_partition="validation", albumentation=val_aug, transforms=val_transforms,
-                                   retinex=args.retinex, shade_of_gray=args.shade_of_gray)
+                                   retinex=args.retinex, shade_of_gray=args.shade_of_gray, colornet=args.colornet)
 val_loader = DataLoader(val_dataset, batch_size=args.batch_size, pin_memory=True, shuffle=False)
 print("Data loaded!\n")
 
@@ -136,9 +136,13 @@ for current_epoch in range(args.epochs):
 
     alert_unfreeze = check_unfreeze(alert_unfreeze, args.pretrained_imagenet, current_epoch, args.freezed_epochs, model, args.output_dir, args.model_name)
 
-    train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
+    if not args.colornet:
+        train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
+        val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion, data_predicts=True)
+    else:
+        train_loss, train_accuracy = train_step_colornet(train_loader, model, criterion, optimizer)
+        val_loss, val_accuracy, val_predicts, val_truths = val_step_colornet(val_loader, model, criterion, data_predicts=True)
 
-    val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion, data_predicts=True)
     val_balanced_accuracy = balanced_accuracy_score(val_truths, val_predicts)
 
     if val_accuracy > best_accuracy:

@@ -9,6 +9,7 @@ import torchy
 import pickle
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+from skimage import color
 import utils.color_constancy as color_constancy
 
 ISIC_PATH = "/home/maparla/DeepLearning/Datasets/ISIC2019/"
@@ -88,7 +89,7 @@ def normalize_data(feats, norm):
 
 class ISIC2019_FromFolders(data.Dataset):
 
-    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize=255, seed=42, retinex=False, shade_of_gray=False):
+    def __init__(self, data_partition="", transforms=None, albumentation=None, normalize=255, seed=42, retinex=False, shade_of_gray=False, colornet=False):
         """
           - data_partition:
              -> Si esta vacio ("") devuelve todas las muestras de todo el TRAIN
@@ -111,6 +112,7 @@ class ISIC2019_FromFolders(data.Dataset):
         self.normalize = normalize
         self.retinex = retinex
         self.shade_of_gray = shade_of_gray
+        self.colornet = colornet
 
     def __len__(self):
         return len(self.imgs)
@@ -135,6 +137,10 @@ class ISIC2019_FromFolders(data.Dataset):
         else: # If there are not Pytorch transformations, principally ToTensor(), we have to modify manually the data
             image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
             image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
+
+        if self.colornet:
+            # rgb, lab, hsv, yuv, ycbcr, hed, yiq
+            return image, color.rgb2lab(image), color.rgb2hsv(image), color.rgb2yuv(image), color.rgb2ycbcr(image), color.rgb2hed(image), color.rgb2yiq(image)
         return image, target
 
 

@@ -24,4 +24,4 @@ python3 -u train.py --optimizer $optimizer --model_name $model --learning_rate $
                     --output_dir $model_path --batch_size $batch_size --path_extension $path_extension --data_augmentation \
                     --depth_coefficient $depth_coefficient --width_coefficient $width_coefficient \
                     --resolution_coefficient $resolution_coefficient --freezed_epochs $freezed_epochs \
-                    --img_size $img_size --crop_size $crop_size --snapshot $snapshot
+                    --img_size $img_size --crop_size $crop_size --snapshot $snapshot --colornet

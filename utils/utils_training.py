@@ -4,7 +4,9 @@ import torchy
 from efficientnet_pytorch import EfficientNet
 import pretrainedmodels
 import models
+import numpy as np
 
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coefficient=1.0, freezed=True):
     if model_name == "efficientnet":
@@ -38,7 +40,7 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
         return model.cuda()
     elif "color-densenet-40" in model_name:
         growth_rate = int(model_name.split("-")[-1])
-        return models.densenet.densenet_40_x(growth_rate=growth_rate, num_classes=num_classes).cuda()
+        return models.colornet.ColorNet_40_x(growth_rate=growth_rate, num_classes=num_classes).cuda()
     else:
         assert False, "Uknown model selected!"
 
@@ -63,3 +65,53 @@ def check_unfreeze(alert_unfreeze, pretrained_imagenet, current_epoch, freezed_e
         torch.save(model.state_dict(), output_dir + "model_" + model_name + "_FreezedPhase.pt")
         return False # Model unfreezed
     return True # Model Not unfreezed
+
+
+
+def train_step_colornet(train_loader, model, criterion, optimizer):
+    train_loss, train_correct = [], 0
+    model.train()
+    for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in train_loader:
+
+        rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
+        rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
+        y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+
+        loss = criterion(y_pred.float(), target.long())
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        _, pred = y_pred.max(1)  # get the index of the max log-probability
+        train_correct += pred.eq(target).sum().item()
+        train_loss.append(loss.item())
+
+    train_accuracy = 100. * train_correct / len(train_loader.dataset)
+    return np.mean(train_loss), train_accuracy
+
+
+def val_step_colornet(val_loader, model, criterion, data_predicts = False):
+    val_loss, val_correct = [], 0
+    predicts, truths = [], []
+    init = -1
+    model.eval()
+    with torch.no_grad():
+        for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in val_loader:
+
+            rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
+            rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
+            y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+
+            loss = criterion(y_pred.float(), target.long())
+            val_loss.append(loss.item())
+            _, pred = y_pred.max(1)  # get the index of the max log-probability
+            val_correct += pred.eq(target).sum().item()
+            if data_predicts:
+                predicts.append(pred.detach().cpu().numpy())
+                truths.append(target.detach().cpu().numpy())
+
+    val_accuracy = 100. * val_correct / len(val_loader.dataset)
+    if not data_predicts: return np.mean(val_loss), val_accuracy
+
+    predicts = np.concatenate(predicts)
+    truths = np.concatenate(truths)
+    return np.mean(val_loss), val_accuracy, predicts, truths

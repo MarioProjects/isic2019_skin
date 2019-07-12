@@ -107,7 +107,7 @@ def DenseNet161():
 def densenet_cifar():
     return DenseNet(Bottleneck, [6, 12, 24, 16], growth_rate=12)
 
-def densenet_40_x(growth_rate, num_classes=8):
+def densenet_40_x(growth_rate=12, num_classes=8):
     return DenseNet(Bottleneck, [3, 6, 6, 3], growth_rate=growth_rate, num_classes=num_classes).cuda()
 
 def test():
@@ -115,4 +115,4 @@ def test():
     x = torch.randn(32, 3, 32, 32)
     y = net(x.cuda())
     print(y)
-test()
+#test()

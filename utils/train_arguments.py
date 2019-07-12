@@ -23,6 +23,7 @@ parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for t
 
 parser.add_argument('--retinex', action='store_true', help='Apply retinex on data')
 parser.add_argument('--shade_of_gray', action='store_true', help='Apply shade of gray on data')
+parser.add_argument('--colornet', action='store_true', help='Use colornet data [rgb, lab, hsv...]')
 
 parser.add_argument('--model_name', type=str, default='efficientnet', help='Model name for training')
 parser.add_argument('--optimizer', type=str, default='adam',
