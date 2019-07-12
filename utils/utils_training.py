@@ -71,11 +71,16 @@ def check_unfreeze(alert_unfreeze, pretrained_imagenet, current_epoch, freezed_e
 def train_step_colornet(train_loader, model, criterion, optimizer):
     train_loss, train_correct = [], 0
     model.train()
-    for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in train_loader:
+    ###for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in train_loader:
+    for rgb, lab, hsv, target in train_loader:
 
-        rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
-        rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
-        y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+        ###rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
+        ###rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
+        ###y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+
+        rgb, lab, hsv, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), target.to(DEVICE)
+        rgb, lab, hsv = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float)
+        y_pred = model(rgb, lab, hsv)
 
         loss = criterion(y_pred.float(), target.long())
         optimizer.zero_grad()
@@ -95,11 +100,16 @@ def val_step_colornet(val_loader, model, criterion, data_predicts = False):
     init = -1
     model.eval()
     with torch.no_grad():
-        for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in val_loader:
+        ###for rgb, lab, hsv, yuv, ycbcr, hed, yiq, target in val_loader:
+        for rgb, lab, hsv, target in val_loader:
 
-            rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
-            rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
-            y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+            ###rgb, lab, hsv, yuv, ycbcr, hed, yiq, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), yuv.to(DEVICE), ycbcr.to(DEVICE), hed.to(DEVICE), yiq.to(DEVICE), target.to(DEVICE)
+            ###rgb, lab, hsv, yuv, ycbcr, hed, yiq = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float), yuv.type(torch.float), ycbcr.type(torch.float), hed.type(torch.float), yiq.type(torch.float)
+            ###y_pred = model(rgb, lab, hsv, yuv, ycbcr, hed, yiq)
+
+            rgb, lab, hsv, target = rgb.to(DEVICE), lab.to(DEVICE), hsv.to(DEVICE), target.to(DEVICE)
+            rgb, lab, hsv = rgb.type(torch.float), lab.type(torch.float), hsv.type(torch.float)
+            y_pred = model(rgb, lab, hsv)
 
             loss = criterion(y_pred.float(), target.long())
             val_loss.append(loss.item())

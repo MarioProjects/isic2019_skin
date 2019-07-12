@@ -6,11 +6,11 @@ width_coefficient=1.0
 resolution_coefficient=1.0
 compound_coefficient=1.0
 # Size efficientnet https://github.com/lukemelas/EfficientNet-PyTorch/issues/42
-img_size=256 # Initial 256
-crop_size=224 # Initial 224
+img_size=150 # Initial 256
+crop_size=128 # Initial 224
 epochs=300
 freezed_epochs=0
-batch_size=8 # efficientnet -> 32 / efficientnet_pretrained_b4 -> 16
+batch_size=32 # efficientnet -> 32 / efficientnet_pretrained_b4 -> 16
 optimizer="sgd"
 snapshot=1
 lr=0.01 # learning_rate
