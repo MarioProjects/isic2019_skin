@@ -136,11 +136,16 @@ class ISIC2019_FromFolders(data.Dataset):
             image = self.transform(image)
         else: # If there are not Pytorch transformations, principally ToTensor(), we have to modify manually the data
             image = normalize_data(image, self.normalize) # ToTensor() transform Normalize 0-1
-            image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
+            if not self.colornet:
+                image = image.transpose(2, 0, 1)  # Pytorch recibe en primer lugar los canales
+            else:
+                lab, hsv, yuv, ycbcr, hed, yiq = color.rgb2lab(image), color.rgb2hsv(image), color.rgb2yuv(image), color.rgb2ycbcr(image), color.rgb2hed(image), color.rgb2yiq(image)
+                # Pytorch recibe en primer lugar los canales
+                image, lab, hsv, yuv, ycbcr, hed, yiq = image.transpose(2, 0, 1), lab.transpose(2, 0, 1), hsv.transpose(2, 0, 1), yuv.transpose(2, 0, 1), ycbcr.transpose(2, 0, 1), hed.transpose(2, 0, 1), yiq.transpose(2, 0, 1)
 
         if self.colornet:
             # rgb, lab, hsv, yuv, ycbcr, hed, yiq
-            return image, color.rgb2lab(image), color.rgb2hsv(image), color.rgb2yuv(image), color.rgb2ycbcr(image), color.rgb2hed(image), color.rgb2yiq(image)
+            return image, lab, hsv, yuv, ycbcr, hed, yiq, target
         return image, target
 
 

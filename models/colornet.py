@@ -47,8 +47,8 @@ class ColorNet_40_x(nn.Module):
 
 def test():
     net = ColorNet_40_x(growth_rate=12, num_classes=8).cuda()
-    rgb_img = torch.randn(4, 3, 32, 32)
-    lab_img = torch.randn(4, 3, 32, 32)
+    rgb_img = torch.randn(4, 3, 224, 224)
+    lab_img = torch.randn(4, 3, 224, 224)
     y = net(rgb_img.cuda(), lab_img.cuda(), lab_img.cuda(), lab_img.cuda(), lab_img.cuda(), lab_img.cuda(), lab_img.cuda())
     print(y)
-test()
+#test()
