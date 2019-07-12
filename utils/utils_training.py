@@ -3,6 +3,7 @@ import torch.nn as nn
 import torchy
 from efficientnet_pytorch import EfficientNet
 import pretrainedmodels
+import models
 
 
 def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coefficient=1.0, freezed=True):
@@ -35,6 +36,9 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
         dim_feats = model.last_linear.in_features  # =2048
         model.last_linear = nn.Linear(dim_feats, num_classes)
         return model.cuda()
+    elif "color-densenet-40" in model_name:
+        growth_rate = int(model_name.split("-")[-1])
+        return models.densenet.densenet_40_x(growth_rate=growth_rate, num_classes=num_classes).cuda()
     else:
         assert False, "Uknown model selected!"
 

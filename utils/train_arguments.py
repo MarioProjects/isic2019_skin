@@ -24,10 +24,7 @@ parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for t
 parser.add_argument('--retinex', action='store_true', help='Apply retinex on data')
 parser.add_argument('--shade_of_gray', action='store_true', help='Apply shade of gray on data')
 
-parser.add_argument('--model_name', type=str, default='efficientnet',
-                    choices=['efficientnet','efficientnet_pretrained_b4', "efficientnet_pretrained_b5",
-                             "se_resnext101_32x4d_pretrained", "resnet34", "resnet50"],  # ToDo: Add more?!
-                    help='Model name for training')
+parser.add_argument('--model_name', type=str, default='efficientnet', help='Model name for training')
 parser.add_argument('--optimizer', type=str, default='adam',
                     choices=['adam', 'sgd', 'rmsprop'],
                     help='Optimizer for training')
