@@ -45,6 +45,15 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
     elif model_name == "seresnext50_32x4d":
         model = ptcv_get_model("seresnext50_32x4d", pretrained=False, num_classes=num_classes)
         return model.cuda()
+    elif model_name == "resnetd50b":
+        model = ptcv_get_model("resnetd50b", pretrained=False, num_classes=num_classes)
+        return model.cuda()
+    elif model_name == "resnetd101b":
+        model = ptcv_get_model("resnetd101b", pretrained=False, num_classes=num_classes)
+        return model.cuda()
+    elif model_name == "resnetd152b":
+        model = ptcv_get_model("resnetd152b", pretrained=False, num_classes=num_classes)
+        return model.cuda()
     elif "color-densenet-40" in model_name:
         growth_rate = int(model_name.split("-")[-1])
         return models.colornet.ColorNet_40_x(growth_rate=growth_rate, num_classes=num_classes).cuda()

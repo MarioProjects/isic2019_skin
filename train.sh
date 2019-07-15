@@ -1,6 +1,6 @@
 #!/bin/bash
 # color-densenet-40-k -> 40: net depth / k: growth rate -> Tipycal 40-12 or 40-48 
-model="seresnext50_32x4d" #"efficientnet" - "efficientnet_pretrained_b{}"4,5
+model="resnetd101b" #"efficientnet" - "efficientnet_pretrained_b{}"4,5
 depth_coefficient=1.0
 width_coefficient=1.0
 resolution_coefficient=1.0
@@ -10,7 +10,7 @@ img_size=256 # Initial 256
 crop_size=224 # Initial 224
 epochs=300
 freezed_epochs=0
-batch_size=64 # efficientnet -> 32 / efficientnet_pretrained_b4 -> 16
+batch_size=32 # efficientnet -> 32 / efficientnet_pretrained_b4 -> 16
 optimizer="sgd"
 snapshot=1
 lr=0.01 # learning_rate
