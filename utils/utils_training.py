@@ -2,9 +2,10 @@ import torch
 import torch.nn as nn
 import torchy
 from efficientnet_pytorch import EfficientNet
-import pretrainedmodels
+from pytorchcv.model_provider import get_model as ptcv_get_model
 import models
 import numpy as np
+
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -31,13 +32,17 @@ def model_selector(model_name, num_classes, depth_coefficient=1.0, width_coeffic
     elif model_name == "resnet50":
         return torchy.models.ResNet(torchy.models.resnet.Bottleneck, [3, 4, 6, 3], num_classes=num_classes).cuda()
     elif model_name == "se_resnext101_32x4d_pretrained":
-        model = pretrainedmodels.__dict__["se_resnext101_32x4d"](num_classes=1000, pretrained='imagenet')
+        model = ptcv_get_model("seresnext101_32x4d", pretrained=True)
         if freezed:
             for param in model.parameters():
                 param.requires_grad = False
         dim_feats = model.last_linear.in_features  # =2048
         model.last_linear = nn.Linear(dim_feats, num_classes)
         return model.cuda()
+    elif model_name == "se_resnext101_32x4d":
+        model = ptcv_get_model("seresnext101_32x4d", pretrained=False)
+    elif model_name == "seresnext50_32x4d":
+        model = ptcv_get_model("seresnext50_32x4d", pretrained=False)
     elif "color-densenet-40" in model_name:
         growth_rate = int(model_name.split("-")[-1])
         return models.colornet.ColorNet_40_x(growth_rate=growth_rate, num_classes=num_classes).cuda()
@@ -118,6 +123,7 @@ def val_step_colornet(val_loader, model, criterion, data_predicts = False):
             if data_predicts:
                 predicts.append(pred.detach().cpu().numpy())
                 truths.append(target.detach().cpu().numpy())
+ 
 
     val_accuracy = 100. * val_correct / len(val_loader.dataset)
     if not data_predicts: return np.mean(val_loss), val_accuracy
