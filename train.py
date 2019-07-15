@@ -167,7 +167,7 @@ for current_epoch in range(args.epochs):
 
     # Imprimimos como va el entrenamiento
     current_time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    print("[{}] Epoch {}, LR: {:.6f}, Train Loss: {:.6f}, Val Loss: {:.6f}, Train Acc: {:.2f}, Val Acc: {:.2f}, Val Balanced Acc: {:.2f}".format(
+    print("[{}] Epoch {}, LR: {:.6f}, Train Loss: {:.6f}, Val Loss: {:.6f}, Train Acc: {:.2f}, Val Acc: {:.4f}, Val Balanced Acc: {:.4f}".format(
         current_time, current_epoch + 1, torchy.utils.get_current_lr(optimizer), train_loss, val_loss, train_accuracy, val_accuracy, val_balanced_accuracy
     ))
 
