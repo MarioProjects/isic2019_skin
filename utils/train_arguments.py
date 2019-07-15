@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser(
     formatter_class=SmartFormatter)
 
 parser.add_argument('--verbose', action='store_true', help='Verbose mode')
+parser.add_argument('--weighted_loss', action='store_true', help='Apply inverse weighted loss for class imbalance')
 parser.add_argument('--pretrained_imagenet', action='store_true', help='If you will use pretrained model on Imagenet (normalizations to data)')
 parser.add_argument('--epochs', type=int, default=200, help='Total number epochs for training')
 parser.add_argument('--batch_size', type=int, default=32, help='Batch Size for training')

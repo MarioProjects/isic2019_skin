@@ -1,0 +1,23 @@
+{
+  "batch_size": 32,
+  "compound_coefficient": 1.0,
+  "retinex": false,
+  "snapshot": 1,
+  "depth_coefficient": 1.0,
+  "learning_rate": 0.001,
+  "output_dir": "results/new_logs_efficientnet_adam/",
+  "freezed_epochs": 100,
+  "pretrained_imagenet": false,
+  "model_name": "efficientnet",
+  "resolution_coefficient": 1.0,
+  "crop_size": 224,
+  "optimizer": "adam",
+  "epochs": 200,
+  "data_augmentation": false,
+  "path_extension": "",
+  "img_size": 256,
+  "shade_of_gray": false,
+  "width_coefficient": 1.0,
+  "verbose": false,
+  "balanced_sampler": false
+}

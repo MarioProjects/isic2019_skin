@@ -116,7 +116,13 @@ progress_train_acc, progress_val_acc, progress_val_balanced_acc = [], [], []
 best_loss, best_accuracy, best_balanced_accuracy, global_best_accuracy, global_best_balanced_accuracy = 10e10, -1, -1, -1, -1
 alert_unfreeze = True
 
-criterion = nn.CrossEntropyLoss()
+if args.weighted_loss:
+    with open("class_weights.pkl", "rb") as fp:   # Unpickling
+        weights = pickle.load(fp)
+    class_weights = torch.FloatTensor(weights).cuda()
+    criterion = nn.CrossEntropyLoss(weight=class_weights)
+else:
+    criterion = nn.CrossEntropyLoss()
 optimizer = get_optimizer(args.optimizer, model, lr=args.learning_rate)
 
 if args.snapshot > 1:
