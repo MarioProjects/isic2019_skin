@@ -126,12 +126,13 @@ forgotten to normalize** (Normalize) the images... corrected for next phases!
 
 #### PHASE 2 . Data Augmentation
 
-|     Optimizer     |            LR Planning               |   Additional Info    |     Accuracy    |  Balanced Accuracy  |
-|:-----------------:|:------------------------------------:|:--------------------:|:---------------:|:-------------------:|
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ------------------  |      0.8226     |       0.7320        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |       Aggro DA       |      0.8244     |       0.7306        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |       Cutout50       |      0.8247     |       0.7517        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |       Retinex        |      0.8055     |       0.7057        |
+|     Optimizer     |            LR Planning               |      Additional Info      |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:-------------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |     ------------------    |      0.8226     |       0.7320        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Aggro DA         |      0.8244     |       0.7306        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Cutout50         |      0.8247     |       0.7517        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Retinex          |      0.8055     |       0.7057        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ShadesGray - NoColorTrans|      0.8073     |       0.7253        |
 
 In this experiments all images are normalized dividing the data by 255. Custom Data Augmentation employed:
 
