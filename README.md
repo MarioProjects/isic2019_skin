@@ -95,6 +95,7 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [ ] ResnetD-101b
 
 - [ ] PHASE 5 - Last Steps
+  + [ ] Try Improve CutMix (See [issues](https://github.com/clovaai/CutMix-PyTorch/issues))
   + [ ] [Snapshot Ensembling](https://arxiv.org/abs/1704.00109)
   + [ ] Test Time Augmentations  
   + [ ] Calibration Methods / Uknown class
