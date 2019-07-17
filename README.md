@@ -81,19 +81,25 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [x] Custom Data Augmentation (based on previous papers)
   + [ ] [Fast Autoaugment (transfer?)](https://arxiv.org/abs/1905.00397)
 
-- [ ] PHASE 3 - [EfficientNet Explotation](https://arxiv.org/pdf/1905.11946.pdf) 
-  + [ ] Coefficients Search
-  + [ ] Scale EfficientNet 
-  + [ ] Compare with powerful Model (ResNet?)
-
-- [ ] PHASE 4 - Improvement Techniques
+- [ ] PHASE 3 - Improvement Techniques
+  + [x] Weighted Cross Entropy
+  + [x] [Color Constancy - Shades of gray and Retinex](http://vislab.isr.ist.utl.pt/wp-content/uploads/2012/12/14-ICIPa.pdf)
+  + [x] [Cutout](https://arxiv.org/abs/1708.04552)
+  + [x] [Mixup](https://arxiv.org/abs/1710.09412)
+  + [x] [CutMix](https://arxiv.org/abs/1905.04899)
+  + [x] [Color Spaces - ColorNet](https://arxiv.org/abs/1902.00267)
   + [ ] [Pair Sampling](https://arxiv.org/pdf/1801.02929.pdf)
+
+- [ ] PHASE 4 - [Model Explotation](https://github.com/osmr/imgclsmob/tree/master/pytorch) 
+  + [ ] Seresnext50
+  + [ ] ResnetD-101b
+
+- [ ] PHASE 5 - Last Steps
   + [ ] [Snapshot Ensembling](https://arxiv.org/abs/1704.00109)
-  + [ ] Test Time Augmentations
-  + [ ] Calibration Methods
-  + [ ] [Color Constancy - Shades of gray](http://vislab.isr.ist.utl.pt/wp-content/uploads/2012/12/14-ICIPa.pdf)
+  + [ ] Test Time Augmentations  
+  + [ ] Calibration Methods / Uknown class
   + [ ] Error analysis
-  
+  + [ ] Model Ensembling -> Sum / Votation
 
 ### Results
 
@@ -130,9 +136,6 @@ forgotten to normalize** (Normalize) the images... corrected for next phases!
 |:-----------------:|:------------------------------------:|:-------------------------:|:---------------:|:-------------------:|
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |     ------------------    |      0.8226     |       0.7320        |
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |          Aggro DA         |      0.8244     |       0.7306        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Cutout50         |      0.8247     |       0.7517        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Retinex          |      0.8055     |       0.7057        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ShadesGray - NoColorTrans|      0.8073     |       0.7253        |
 
 In this experiments all images are normalized dividing the data by 255. Custom Data Augmentation employed:
 
@@ -162,7 +165,19 @@ train_aug = albumentations.Compose([
 ])
 ```
 
-#### PHASE 3.1 . EfficientNet - Coefficients Search
+ 
+#### PHASE 3 - Improvement Techniques 
+
+For Mixup we have tested $\alpha$=0.5 and $\alpha$=0.2 meanwhile for cutout mask size 50x50.
+
+|     Optimizer     |            LR Planning               |       Additional Info      |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:--------------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Cutout50          |      0.8247     |       0.7517        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |  Cutout50 - Weighted Loss  |      0.8128     |       0.7478        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Retinex           |      0.8055     |       0.7057        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ShadesGray - NoColorTrans |      0.8073     |       0.7253        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |         ColorNet           |      0.8000     |       0.6813        |
+
 
 ### Reminders
 - Confusion Matrix

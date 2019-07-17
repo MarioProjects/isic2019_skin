@@ -1,0 +1,20 @@
+{
+  "verbose": false,
+  "output_dir": "results/efficientnet_sgd_lr0.01_d1.0_w1.0_r1.0_c1.0_DA_steplr_phase3_CustomDA_CoefficientSearch/",
+  "path_extension": "steplr_phase3_CustomDA_CoefficientSearch",
+  "compound_coefficient": 1.0,
+  "batch_size": 32,
+  "epochs": 300,
+  "crop_size": 224,
+  "learning_rate": 0.01,
+  "depth_coefficient": 1.0,
+  "img_size": 256,
+  "width_coefficient": 1.0,
+  "data_augmentation": true,
+  "model_name": "efficientnet",
+  "freezed_epochs": 0,
+  "optimizer": "sgd",
+  "balanced_sampler": false,
+  "pretrained_imagenet": false,
+  "resolution_coefficient": 1.0
+}
