@@ -70,10 +70,10 @@ if args.data_augmentation:
         albumentations.RandomCrop(p=1, height=args.crop_size, width=args.crop_size),
         albumentations.VerticalFlip(p=0.5),
         albumentations.HorizontalFlip(p=0.5),
-        albumentations.RandomBrightnessContrast(p=0.5, brightness_limit=0.22, contrast_limit=0.22),
-        albumentations.HueSaturationValue(p=0.5, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
+        albumentations.RandomBrightnessContrast(p=0.4, brightness_limit=0.22, contrast_limit=0.22),
+        albumentations.HueSaturationValue(p=0.4, hue_shift_limit=5, sat_shift_limit=10, val_shift_limit=5),
         albumentations.ShiftScaleRotate(p=0.5, shift_limit=0.1, scale_limit=0.1, rotate_limit=45),
-        #albumentations.Cutout(p=0.5, num_holes=1, max_h_size=50, max_w_size=50)
+        albumentations.Cutout(p=0.5, num_holes=1, max_h_size=50, max_w_size=50)
     ])
 
     #train_transforms = transforms.Compose([
@@ -131,7 +131,8 @@ if args.snapshot > 1:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
     num_snapshot = 0
 else:
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1)
+    #scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1) # 0.01 -> 0.001 -> 0.0001 -> 0.00001
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 120, 175, 230, 270], gamma=0.256) # 0.01 ->
 
 for argument in args.__dict__:
     print("{}: {}".format(argument, args.__dict__[argument]))

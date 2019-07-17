@@ -91,7 +91,7 @@ Some techniques that we are using or should be used, as a reminder, are:
   + [ ] [Pair Sampling](https://arxiv.org/pdf/1801.02929.pdf)
 
 - [ ] PHASE 4 - [Model Explotation](https://github.com/osmr/imgclsmob/tree/master/pytorch) 
-  + [ ] Seresnext50
+  + [x] Seresnext50
   + [ ] ResnetD-101b
 
 - [ ] PHASE 5 - Last Steps
@@ -177,6 +177,12 @@ For Mixup we have tested $\alpha$=0.5 and $\alpha$=0.2 meanwhile for cutout mask
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |          Retinex           |      0.8055     |       0.7057        |
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |  ShadesGray - NoColorTrans |      0.8073     |       0.7253        |
 |   SGD Momentum    |      Step LR (Expertise) 0.01        |         ColorNet           |      0.8000     |       0.6813        |
+
+#### PHASE 4 - Model Explotation
+
+|     Optimizer     |            LR Planning               |      Model     |        Additional Info      |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:--------------:|:---------------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |   SeresNext50  |   Cutout50 - Weighted Loss  |      0.8763     |       0.8109        |
 
 
 ### Reminders
