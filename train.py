@@ -142,12 +142,16 @@ for current_epoch in range(args.epochs):
 
     alert_unfreeze = check_unfreeze(alert_unfreeze, args.pretrained_imagenet, current_epoch, args.freezed_epochs, model, args.output_dir, args.model_name)
 
-    if not args.colornet:
-        train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
+    if args.cutmix:
+        train_loss, train_accuracy = train_step_cutmix(train_loader, model, criterion, optimizer)
         val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion, data_predicts=True)
-    else:
+    if args.colornet:
         train_loss, train_accuracy = train_step_colornet(train_loader, model, criterion, optimizer)
         val_loss, val_accuracy, val_predicts, val_truths = val_step_colornet(val_loader, model, criterion, data_predicts=True)
+    else:
+        train_loss, train_accuracy = torchy.utils.train_step(train_loader, model, criterion, optimizer)
+        val_loss, val_accuracy, val_predicts, val_truths = torchy.utils.val_step(val_loader, model, criterion,
+                                                                                 data_predicts=True)
 
     val_balanced_accuracy = balanced_accuracy_score(val_truths, val_predicts)
 

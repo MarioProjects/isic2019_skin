@@ -142,3 +142,74 @@ def val_step_colornet(val_loader, model, criterion, data_predicts = False):
     predicts = np.concatenate(predicts)
     truths = np.concatenate(truths)
     return np.mean(val_loss), val_accuracy, predicts, truths
+
+
+
+
+# For CutMix
+def rand_bbox(size, lam):
+    W = size[2]
+    H = size[3]
+    cut_rat = np.sqrt(1. - lam)
+    cut_w = np.int(W * cut_rat)
+    cut_h = np.int(H * cut_rat)
+
+    # uniform
+    cx = np.random.randint(W)
+    cy = np.random.randint(H)
+
+    bbx1 = np.clip(cx - cut_w // 2, 0, W)
+    bby1 = np.clip(cy - cut_h // 2, 0, H)
+    bbx2 = np.clip(cx + cut_w // 2, 0, W)
+    bby2 = np.clip(cy + cut_h // 2, 0, H)
+
+    return bbx1, bby1, bbx2, bby2
+
+
+def train_step_cutmix(train_loader, model, criterion, optimizer, beta=1.0, cutmix_prob=0.5):
+    train_loss, train_correct = [], 0
+    model.train()
+
+    for image, target in train_loader:
+
+        image, target = image.to(DEVICE), target.to(DEVICE)
+        image = image.type(torch.float)
+        y_pred = model(image)
+
+        #loss = criterion(y_pred.float(), target.long())
+
+        r = np.random.rand(1)
+        if beta > 0 and r < cutmix_prob:
+            # generate mixed sample
+            lam = np.random.beta(beta, beta)
+            rand_index = torch.randperm(image.size()[0]).cuda()
+            target_a = target
+            target_b = target[rand_index]
+            bbx1, bby1, bbx2, bby2 = rand_bbox(image.size(), lam)
+            image[:, :, bbx1:bbx2, bby1:bby2] = image[rand_index, :, bbx1:bbx2, bby1:bby2]
+            # Recalculate Lambda -> https://github.com/clovaai/CutMix-PyTorch/issues/1
+            lam = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (image.size()[-1] * image.size()[-2]))
+            # compute output
+            input_var = torch.autograd.Variable(image, requires_grad=True)
+            target_a_var = torch.autograd.Variable(target_a)
+            target_b_var = torch.autograd.Variable(target_b)
+            y_pred = model(input_var)
+            loss = criterion(y_pred, target_a_var) * lam + criterion(y_pred, target_b_var) * (1. - lam)
+        else:
+            # compute output
+            input_var = torch.autograd.Variable(image, requires_grad=True)
+            target_var = torch.autograd.Variable(target)
+            y_pred = model(input_var)
+            loss = criterion(y_pred, target_var)
+
+    _, pred = y_pred.max(1)  # get the index of the max log-probability
+    train_correct += pred.eq(target).sum().item()
+    train_loss.append(loss.item())
+
+    # compute gradient and step
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    train_accuracy = 100. * train_correct / len(train_loader.dataset)
+    return np.mean(train_loss), train_accuracy
