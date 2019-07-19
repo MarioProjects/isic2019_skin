@@ -23,8 +23,6 @@ else
     model_path="results/"$model"_"$optimizer"_lr"$lr
 fi
 
-model_path="results/"$model"_"$optimizer"_lr"$lr"_d"$depth_coefficient"_w"$width_coefficient"_r"$resolution_coefficient"_c"$compound_coefficient
-
 # efficientenet --> depth_coefficient $depth_coefficient --width_coefficient $width_coefficient \
 #                    --resolution_coefficient $resolution_coefficient --compound_coefficient $compound_coefficient \
 
