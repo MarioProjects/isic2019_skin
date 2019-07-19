@@ -117,7 +117,8 @@ best_loss, best_accuracy, best_balanced_accuracy, global_best_accuracy, global_b
 alert_unfreeze = True
 
 if args.weighted_loss:
-    with open("class_weights.pkl", "rb") as fp:   # Unpickling
+    print("Loaded Class weights!")
+    with open("class_weights_divide.pkl", "rb") as fp:   # Unpickling
         weights = pickle.load(fp)
     class_weights = torch.FloatTensor(weights).cuda()
     criterion = nn.CrossEntropyLoss(weight=class_weights)

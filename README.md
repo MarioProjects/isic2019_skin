@@ -171,19 +171,20 @@ train_aug = albumentations.Compose([
 
 For Mixup we have tested $\alpha$=0.5 and $\alpha$=0.2 meanwhile for cutout mask size 50x50.
 
-|     Optimizer     |            LR Planning               |       Additional Info      |     Accuracy    |  Balanced Accuracy  |
-|:-----------------:|:------------------------------------:|:--------------------------:|:---------------:|:-------------------:|
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Cutout50          |      0.8247     |       0.7517        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |  Cutout50 - Weighted Loss  |      0.8128     |       0.7478        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |          Retinex           |      0.8055     |       0.7057        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |  ShadesGray - NoColorTrans |      0.8073     |       0.7253        |
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |         ColorNet           |      0.8000     |       0.6813        |
+|     Optimizer     |              LR Planning             |          Additional Info           |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:----------------------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |        Step LR (Expertise) 0.01      |              Cutout50              |      0.8247     |       0.7517        |
+|   SGD Momentum    |        Step LR (Expertise) 0.01      |  Cutout50 - Weighted Loss Subtract |      0.8128     |       0.7478        |
+|   SGD Momentum    |        Step LR (Expertise) 0.01      |              Retinex               |      0.8055     |       0.7057        |
+|   SGD Momentum    |        Step LR (Expertise) 0.01      |  ShadesGray - NoColorTrans         |      0.8073     |       0.7253        |
+|   SGD Momentum    |        Step LR (Expertise) 0.01      |              ColorNet              |      0.8000     |       0.6813        |
 
 #### PHASE 4 - Model Explotation
 
-|     Optimizer     |            LR Planning               |      Model     |        Additional Info      |     Accuracy    |  Balanced Accuracy  |
-|:-----------------:|:------------------------------------:|:--------------:|:---------------------------:|:---------------:|:-------------------:|
-|   SGD Momentum    |      Step LR (Expertise) 0.01        |   SeresNext50  |   Cutout50 - Weighted Loss  |      0.8763     |       0.8109        |
+|     Optimizer     |            LR Planning               |      Model     |            Additional Info          |     Accuracy    |  Balanced Accuracy  |
+|:-----------------:|:------------------------------------:|:--------------:|:-----------------------------------:|:---------------:|:-------------------:|
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |   SeresNext50  |   Cutout50 - Weighted Loss Subtract |      0.8763     |       0.8109        |
+|   SGD Momentum    |      Step LR (Expertise) 0.01        |   Resnetd101b  |   Cutout50 - Weighted Loss Subtract |      0.8813     |       0.8298        |
 
 
 ### Reminders
