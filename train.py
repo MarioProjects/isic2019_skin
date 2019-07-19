@@ -120,6 +120,7 @@ if args.weighted_loss:
     print("Loaded Class weights!")
     with open("class_weights_divide.pkl", "rb") as fp:   # Unpickling
         weights = pickle.load(fp)
+    print("Weights: {}".format(weights))
     class_weights = torch.FloatTensor(weights).cuda()
     criterion = nn.CrossEntropyLoss(weight=class_weights)
 else:
@@ -132,8 +133,8 @@ if args.snapshot > 1:
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, scheduler_step)
     num_snapshot = 0
 else:
-    #scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1) # 0.01 -> 0.001 -> 0.0001 -> 0.00001
-    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 120, 175, 230, 270], gamma=0.256) # 0.01 ->
+    scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[150, 220, 270], gamma=0.1) # 0.01 -> 0.001 -> 0.0001 -> 0.00001
+    ###scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[75, 120, 175, 230, 270], gamma=0.256) # 0.01 ->
 
 for argument in args.__dict__:
     print("{}: {}".format(argument, args.__dict__[argument]))
